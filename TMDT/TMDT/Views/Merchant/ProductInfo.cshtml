@@ -1,0 +1,96 @@
+﻿<script src="~/Scripts/jquery-1.8.3.min.js"></script>
+<script src="~/Scripts/jquery.elevatezoom.js"></script>
+@model TMDT.Product
+@{
+    ViewBag.Title = "ProductInfo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<hr />
+<div class="container">
+    <div class="col-md-6">
+        <div>
+            <img id="img_01" src="~/public/MyImages/@(Model.Image.Substring(0,Model.Image.IndexOf("|")))" class="img_detail" />
+        </div>
+        <div id="gallery_01">
+            @{ string temp = Model.Image;
+             for (int i = 0; i < 8; i++)
+             {
+                 if (temp.IndexOf("|") < 0) { break; }
+                <a href="#" data-image="/public/MyImages/@(temp.Substring(0, temp.IndexOf("|")))">
+                    <img class="gal_detail" id="img_01" src="~/public/MyImages/@(temp.Substring(0, temp.IndexOf("|")))" />
+                </a>
+                 temp = temp.Substring(temp.IndexOf("|") + 1);
+             }
+            }
+        </div>
+    </div>
+    <div class="col-md-6">
+        <dl class="dl-horizontal">
+            <dt>
+                <label>Người bán</label>
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Account.UserName)
+            </dd>
+
+            <dt>Tên loại</dt>
+            <dd>
+                @Html.DisplayFor(model => model.Category.CategoryName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ProductName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Info)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Info)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Quantity)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Price)
+            </dt>
+
+            <dd style="color:red;font-weight:bold">
+                @Html.DisplayFor(model => model.Price)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.CreatedDate)
+            </dd>
+            <dt>@Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.ProductID })</dt>
+            <dd>
+                |
+                @Html.ActionLink("Về trang chủ", "Index")
+            </dd>
+        </dl>
+    </div>
+</div>
+<script>
+    $("#img_01").elevateZoom({ gallery: 'gallery_01', cursor: 'pointer', galleryActiveClass: 'active', imageCrossfade: true, loadingIcon: 'http://www.elevateweb.co.uk/spinner.gif' });
+    $("#img_01").bind("click", function (e) {
+        var ez = $('#img_01').data('elevateZoom');
+        $.fancybox(ez.getGalleryList());
+        return false;
+    });
+</script>
+

@@ -1,0 +1,65 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var listnewproduct = (List<TMDT.Product>)ViewBag.New;
+
+}
+@model IEnumerable<TMDT.Product>
+<div class="content">
+    <div class="content_top">
+        <div class="heading">
+            <h3>Sản phẩm mới</h3>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="section group">
+        @foreach (var item in listnewproduct)
+        {
+            <div class="grid_1_of_4 images_1_of_4">
+                <a href="@Url.Action("Details","Home", new { id=item.ProductID})"><img src="@Url.Content("/public/MyImages/"+Html.DisplayFor(modelitem => item.Image))" /></a>
+                <h2>@Html.DisplayFor(modelitem => item.ProductName)</h2>
+                <div class="price-details">
+                    <div class="add-cart">
+                        <h4> @Html.ActionLink("Thêm vào giỏ", "AddToCart", "CartItem", new { id = item.ProductID }, "")</h4>
+                    </div>
+                    <div class="price-number">
+                        <p><span class="rupees">@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</span></p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    @foreach (Category itemCat in ViewBag.Category)
+    {
+        <div class="content_bottom">
+            <div class="heading">
+                <h3>@itemCat.CategoryName</h3>
+            </div>
+            <div class="see">
+                <p><a href="/Home/Category/@itemCat.CategoryID">Xem tất cả</a></p>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="section group">
+            @foreach (Product item in Model.Where(x => x.CategoryID == itemCat.CategoryID).Take(4))
+            {
+                <div class="grid_1_of_4 images_1_of_4">
+                    <a href="@Url.Action("Details", "Home", new { id = item.ProductID })">
+                        @{
+                string parameterValue = item.Image.ToString().Substring(0, item.Image.IndexOf("|"));
+                        }
+                        <img src="@Url.Content("/public/MyImages/" + Html.DisplayFor(modelitem=>parameterValue))" />
+                    </a>
+                    <h2>@Html.DisplayFor(modelitem => item.ProductName)</h2>
+                    <div class="price-details">
+                        <div class="add-cart">
+                            <h4> @Html.ActionLink("Thêm vào giỏ", "AddToCart", "CartItem", new { id = item.ProductID }, "")</h4>
+                        </div>
+                        <div class="price-number">
+                            <p><span class="rupees">@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</span></p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

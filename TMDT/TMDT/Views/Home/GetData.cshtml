@@ -1,0 +1,64 @@
+﻿<script type="text/javascript">
+    $(document).ready(function () {
+        $("#ex2").bootstrapSlider({ id: "slider12c" });
+        $("#ex2").on('slide', function (slideEvt) {
+            $("#price1").text(slideEvt.value[0]);
+            $("#price2").text(slideEvt.value[1]);
+            $("#pricetext1").val(slideEvt.value[0]);
+            $("#pricetext2").val(slideEvt.value[1]);
+        });
+    });
+</script>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <div class="content_top_edit" style="margin:0 15%;">
+                    <h3>Tìm kiếm nâng cao</h3>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    @using (Html.BeginForm("ReturnSearch", "Home"))
+                    {
+                        <div class="form-group"><span class="control-label col-md-4">Tên sản phẩm:</span>
+                            <div class="col-md-8">
+                                @Html.TextBox("name", ViewBag.CurrentFilter as string,new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group"><span class="control-label col-md-4">Loại:</span>
+                            <div class="col-md-8"> 
+                                @Html.DropDownList("category", ViewBag.CategoryList as SelectList, "Chọn loại",new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <span class="control-label col-md-4">Người bán:</span>
+                            <div class="col-md-8">
+                                @Html.TextBox("merchant", ViewBag.CurrentMerchant as string, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <span class="control-label col-md-7">Giá từ <span id="price1" name="pricetext1">0</span> đến <span id="price2">2000</span> (Đơn vị: $) </span>
+                            <br />
+                            <div class="col-md-12">
+                                <input id="ex2" type="text" class="span2" value="" data-slider-min="0" data-slider-max="2000" data-slider-step="50" data-slider-value="[0,2000]" data-slider-handle="custom" />
+                                @Html.Hidden("pricetext1", ViewBag.CurrentP1 as string)
+                                @Html.Hidden("pricetext2", ViewBag.CurrentP2 as string)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-6"></div>
+                            <div class="login_button" style="margin:10px 0 0 0;">
+                                <input type="submit" style="padding:5px 15px;font-size:1em" value="TÌM KIẾM" />
+                            </div>
+                            <div class="login_button" style="margin:10px 0 0 0;">
+                                <input data-dismiss="modal" type="button" style="padding:5px 35px;font-size:1em" value="HỦY" />
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

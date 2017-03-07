@@ -1,0 +1,131 @@
+﻿@model TMDT.Product
+
+@{
+    ViewBag.Title = "Sell";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Scripts/dropzone/basic.css" rel="stylesheet" />
+<link href="~/Scripts/dropzone/dropzone.css" rel="stylesheet" />
+<script src="~/Scripts/dropzone/dropzone.js"></script>
+<div class="content">
+    <div class="content_top">
+        <div class="heading">
+            <h3>Đăng sản phẩm mới</h3>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="section group">
+        @using (Html.BeginForm("Sell", "Merchant", FormMethod.Post, new { @id = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <br />
+            <div class="form-horizontal">
+                @if (ViewBag.Message != null)
+                {<div class="alert alert-warning">
+                    @ViewBag.Message
+                </div>}
+                @Html.ValidationSummary(true)
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CategoryID, "Tên loại sản phẩm", new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        @*@Html.DropDownList("CategoryID",ViewBag.CategoryID as SelectList, new { @class = "form-control" })*@
+                        @Html.DropDownList("CategoryID", (IEnumerable<SelectListItem>)ViewBag.Categories, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ProductName, new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(model => model.ProductName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ProductName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Info, new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(model => model.Info, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Info, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Quantity, new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(model => model.Quantity, new { @class = "form-control", @onkeypress = "return event.charCode >= 48&&event.charCode <= 57", oncopy = "return false", onpaste = "return false" })
+                        @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Price, new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(model => model.Price, new { @class = "form-control", @onkeypress = "return event.charCode >= 48&&event.charCode <= 57", maxlength = "4" ,oncopy = "return false", onpaste = "return false" })
+                        @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="form-horizontal">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Image, new { @class = "control-label col-md-2" })
+                <div class="col-md-8">
+                    <div id="dZUpload" class="dropzone dz-clickable">
+                        <div class="dz-default dz-message">
+                            <span>Kéo thả file hình ảnh .jpg, .png, .jpge hoặc click để upload</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Tạo sản phẩm" id="btnCreate" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        autoProcessQueue: false;
+        Dropzone.autoDiscover = false;
+        $("#dZUpload").dropzone({
+            maxFilesize: 2,
+            maxFiles: 8,
+            acceptedFiles: "image/*",
+            maxfilesexceeded: function (file) {
+                this.removeFile(file);
+                alert("Giới hạn số lượng hình ảnh là 8!");
+            },
+            url: "/Merchant/SaveUploadedFile",
+            addRemoveLinks: true,
+            success: function (file, response) {
+                var imgName = response;
+                file.previewElement.classList.add("dz-success");
+                console.log("Successfully uploaded :" + imgName);
+            },
+            error: function (file, response) {
+                file.previewElement.classList.add("dz-error");
+            },
+            removedfile: function (file) {
+                var name = file.name;
+                $.ajax({
+                    type: 'POST',
+                    url: '/Merchant/DeleteFile',
+                    data: "id=" + name,
+                    dataType: 'html',
+                    success: function () {
+                    }
+                });
+                var _ref;
+                return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
+            },
+        });
+    })
+</script>
+<script type="text/javascript">
+    $("#btnCreate").off('click').on('click', function () {
+        $("#form").submit();
+    });
+</script>
+
+

@@ -1,0 +1,137 @@
+﻿@model List<TMDT.Bill>
+
+@{
+    ViewBag.Title = "Order";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var user = Session["User"] as TMDT.Account;
+}
+<div class="content">
+    <div class="content_top">
+        <div class="heading">
+            <h3>Lịch sử đặt hàng</h3>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="section group">
+        <br />
+        <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                Xem đơn đặt hàng
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li class="dropdown-header"><a href="@Url.Action("Order", "CartItem",new { index=0})">Đơn mua hàng</a></li>
+                <li><a href="@Url.Action("Order", "CartItem",new { index=0,limitTime=0})">Trong 30 ngày gần đây</a></li>
+                <li><a href="@Url.Action("Order", "CartItem",new { index=0,limitTime=1})">Trong 6 tháng gần đây</a></li>
+                <li><a href="@Url.Action("Order", "CartItem",new { index=0,limitTime=2})">Trong năm @DateTime.Now.Year.ToString()</a></li>
+                <li><a href="@Url.Action("Order", "CartItem",new { index=0,status=0 })">Chưa hoàn tất</a></li>
+                <li><a href="@Url.Action("Order", "CartItem",new { index=0,status=1 })">Hoàn tất</a></li>
+                @if (user.Level == 1)
+                {
+                    <li class="divider"></li>
+                    <li class="dropdown-header"><a href="@Url.Action("Order", "CartItem",new { index=1})">Đơn bán hàng</a></li>
+                    <li><a href="@Url.Action("Order", "CartItem",new { index=1,limitTime=0})">Trong 30 ngày gần đây</a></li>
+                    <li><a href="@Url.Action("Order", "CartItem",new { index=1,limitTime=1})">Trong 6 tháng gần đây</a></li>
+                    <li><a href="@Url.Action("Order", "CartItem",new { index=1,limitTime=2})">Trong năm @DateTime.Now.Year.ToString()</a></li>
+                    <li><a href="@Url.Action("Order", "CartItem",new { index=1,status=0 })">Chưa hoàn tất</a></li>
+                    <li><a href="@Url.Action("Order", "CartItem",new { index=1,status=1 })">Hoàn tất</a></li>
+                }
+            </ul>
+        </div>
+        @if (user.Level == 1)
+        {
+            <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                    Sắp xếp đơn hàng
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li class="dropdown-header">Ngày đặt</li>
+                    <li><a href="@Url.Action("Sort", "CartItem",new { sort=0,date=0})">Giảm dần</a></li>
+                    <li><a href="@Url.Action("Sort", "CartItem",new { sort=0,date=1})">Tăng dần</a></li>
+                    <li class="divider"></li>
+                    <li class="dropdown-header">Tổng tiền</li>
+                    <li><a href="@Url.Action("Sort", "CartItem", new { sort = 1, sum = 0 })">Giảm dần</a></li>
+                    <li><a href="@Url.Action("Sort", "CartItem", new { sort = 1, sum = 1 })">Tăng dần</a></li>
+                </ul>
+            </div>
+        }
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Ngày đặt hàng</th>
+                        <th>Tổng tiền</th>
+                        <th>Tình trạng</th>
+                        <th>Xem chi tiết</th>
+                        @if (user.Level == 1)
+                        {
+                            <th>#</th>}
+                    </tr>
+                </thead>
+                <tbody>
+                    @{int i = 0;}
+                    @foreach (var item in Model)
+                    {
+                        i = i + 1;
+                        <tr>
+                            <td>@i</td>
+                            <td>@item.CreatedDate</td>
+                            <td>@item.SumMoney</td>
+                            <td>@item.Status</td>
+                            <td>
+                                 @if (user.Level == 1 && user.AccountID != item.AccountID)
+                                {<a href="@Url.Action("OrderMerchant", "Merchant", new { id = item.BillID})" title="Xem chi tiết hàng bán" class="btn-images btn btn btn-default">Xem hàng bán</a>}
+                                 else
+                                 { <a href="@Url.Action("OrderDetail", "CartItem", new { id = item.BillID})" title="Xem chi tiết hàng mua" class="btn-images btn btn btn-default">Xem hàng mua</a>}
+                            </td>
+                            @if (user.Level == 1 && user.AccountID != item.AccountID)
+                            {
+                                <td><button type="button" @(item.Status == "Hoàn tất" ? "disabled" : "") class="btn btn-default btn1" data-toggle="modal" data-target="#myModal1" data-id="@item.BillID" title="Cập nhật trạng thái đơn đặt hàng">Cập nhật trạng thái</button></td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Cập nhật trạng thái đơn đặt hàng</h4>
+            </div>
+            <div class="modal-body">
+                Bạn muốn cập nhật trạng thái đơn đặt hàng thành hoàn tất?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnChange">Cập nhật</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var id;
+    $(".btn1").off('click').on('click', function () {
+        id = $(this).data('id');
+    });
+    $("#btnChange").off('click').on('click', function () {
+        //var id = $(".btn1").data('id');
+        $.ajax({
+            url: '/CartItem/ChangeSttBill',
+            type: 'POST',
+            data: { id: id },
+            dataType: 'json',
+            success: function (response) {
+                if (response.status) {
+                    $('#myModal').modal('hide');
+                    location.reload();
+                }
+            }
+        });
+    });
+</script>

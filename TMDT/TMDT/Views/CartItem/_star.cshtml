@@ -1,0 +1,47 @@
+﻿@model int
+@{var url = Request.Url.AbsolutePath;  }
+@if (Request.Cookies[url] == null)
+{
+    <div id="ratingDiv" class="smallText">
+        <img src="~/public/images/whitestar.png" alt="" class="ratingStar" data-value="1" /><img src="~/public/images/whitestar.png" alt="" class="ratingStar" data-value="2" /><img src="~/public/images/whitestar.png" alt="" class="ratingStar" data-value="3" /><img src="~/public/images/whitestar.png" alt="" class="ratingStar" data-value="4" /><img src="~/public/images/whitestar.png" alt="" class="ratingStar" data-value="5" />
+        <label id="lblResult"></label>
+    </div>
+    <style type="text/css">
+        .ratingStar {
+            cursor: pointer;
+        }
+    </style>
+    <script type="text/javascript">
+        var clickedFlag = false;
+        $(".ratingStar").mouseover(function () {
+            $(this).attr("src", "/public/images/redstar.png").prevAll("img.ratingStar").attr("src", "/public/images/redstar.png");
+        });
+        $(".ratingStar, #radingDiv").mouseout(function () {
+            $(this).attr("src", "/public/images/whitestar.png");
+        });
+        $("#ratingDiv").mouseout(function () {
+            if (!clickedFlag) {
+                $(".ratingStar").attr("src", "/public/images/whitestar.png");
+            }
+        });
+        $(".ratingStar").click(function () {
+            clickedFlag = true;
+            $(".ratingStar").unbind("mouseout mouseover click").css("cursor", "default");
+            @Model
+            var url = "/Home/SendRating?s=5&r=" + $(this).attr("data-value") + "&id=@Model&url=@url";
+            $.post(url, null, function (data) {
+                $("#lblResult").html(data);
+            });
+        });
+        $("#lblResult").ajaxStart(function () {
+            $("#lblResult").html("Processing ....");
+        });
+        $("#lblResult").ajaxError(function () {
+            $("#lblResult").html("<br />Error occured.");
+        });
+    </script>
+}
+else
+{
+    <text><span style="color:green;">Cảm ơn bạn đã đánh giá!</span></text>
+}

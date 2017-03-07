@@ -1,0 +1,71 @@
+﻿@model PagedList.IPagedList<TMDT.Bill>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Danh sách Hóa Đơn";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<h2>Danh sách Hóa Đơn</h2>
+<table class="table">
+    <tr>
+        <th>
+            Tên tài khoản
+        </th>
+        <th>
+            Tổng tiền
+        </th>
+        <th>
+            Ngày lập
+        </th>
+        <th>
+            Tên người nhận
+        </th>
+        <th>
+            SDT người nhận
+        </th>
+        <th>
+            Địa chỉ giao
+        </th>
+        <th>
+            E-mail người nhận
+        </th>
+        <th>
+            Tình trạng
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Account.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SumMoney)
+            </td>
+            <td>
+                @{
+                    string parameterValue = item.CreatedDate.ToShortDateString();                }
+                @Html.DisplayFor(modelItem => parameterValue)            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShipName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShipMobile)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShipAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShipEmail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.ActionLink("Xem chi tiết", "DetailsHoaDon", new { id = item.BillID })
+            </td>
+        </tr>
+    }
+</table>
+@Html.PagedListPager(Model, page => Url.Action("ListHoaDon", new { page }))
+

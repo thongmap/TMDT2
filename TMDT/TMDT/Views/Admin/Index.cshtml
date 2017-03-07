@@ -1,0 +1,7 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    var admin = Session["Admin"] as TMDT.Account;
+}
+@if(admin!=null){<h2>Chào,@admin.UserName</h2>}
+

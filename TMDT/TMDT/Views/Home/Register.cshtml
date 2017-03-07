@@ -1,0 +1,98 @@
+﻿@model TMDT.Account
+
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    function ValidatePass() {
+        var pass1 = document.getElementById("pass").value;
+        var pass2 = document.getElementById("pass2").value;
+        if (pass1 != pass2) {
+            document.getElementById("verify").innerHTML = "*";
+            document.getElementById("verify1").innerHTML = "";
+        }
+        else {
+            document.getElementById("verify1").innerHTML = "Mật khẩu trùng khớp";
+            document.getElementById("verify").innerHTML = "";
+        }
+    }
+</script>
+<div>
+    <div class="content_top_edit">
+        <h3>Đăng kí tài khoản</h3>
+    </div>
+</div>
+@if (ViewBag.Message != null)
+{<div class="alert alert-warning">
+        @ViewBag.Message
+    </div>}
+@using (Html.BeginForm("Register", "Home", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <br />
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true)
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserName, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(model => model.UserName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Pass, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.PasswordFor(model => model.Pass, new { @class = "form-control", @id = "pass" })
+                @Html.ValidationMessageFor(model => model.Pass, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Xác nhận mật khẩu</label>
+            <div class="col-md-6">
+                <input type="password" class="form-control" id="pass2" onkeyup="ValidatePass()" />
+                <span id="verify" class="text-danger"></span>
+                <span id="verify1" class="text-success"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Phone, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(model => model.Phone, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Address, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(model => model.Address, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-3 col-md-2 text-center">
+                <h4 class="login_button">
+                    <input type="submit" style="padding:5px 20px" value="Tạo tài khoản" />
+                </h4>
+            </div>
+            <div class="col-md-2 text-center">
+                <h4 class="login_button">
+                    <input type="reset" style="padding:5px 20px" value="Làm lại" />
+                </h4>
+            </div>
+            <div>
+                <h4 class="login_button">
+                    <input type="button" style="padding:5px 20px" value="Hủy" />
+                </h4>
+            </div>
+        </div>
+    </div>
+}
+

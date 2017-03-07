@@ -1,0 +1,76 @@
+﻿@model TMDT.Account
+
+@{
+    ViewBag.Title = "AccountInfo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var user = Session["User"] as TMDT.Account;
+}
+<div class="content">
+    <div class="content_top">
+        <div class="heading">
+            <h3>Thông tin tài khoản</h3>
+        </div>
+        <div class="clear"></div>
+    </div>
+    @if (TempData["Message"] != null)
+    {<div class="alert alert-success">
+        @TempData["Message"]
+    </div>}
+    <div class="section group">
+        <div>
+            <br />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.UserName)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.UserName)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Phone)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Phone)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Email)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Email)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Address)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Address)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.CreatedDate)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.CreatedDate)
+                </dd>
+                @if (user.Level == 1)
+                {
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ExpiryDate)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.ExpiryDate)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Rating)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Rating)
+                    </dd>
+                    <dt></dt>
+                    <dd>
+                        <a href="@Url.Action("ChangeInfo", "Home",new { id=@Model.AccountID})" title="Danh sách tour" class="btn btn-success">Cập nhật</a>
+                    </dd>
+                }
+            </dl>
+        </div>
+    </div>
+</div>

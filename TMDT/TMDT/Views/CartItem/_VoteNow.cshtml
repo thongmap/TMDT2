@@ -1,0 +1,31 @@
+﻿@model string
+
+@{
+
+    Single m_inPercent = 0;
+    var thisVote = string.Empty;
+
+    m_inPercent = (float)(double.Parse(Model.Substring(0, Model.IndexOf(","))) * 100) / 5;
+
+
+    if (Model.Substring(Model.IndexOf(",")+1).Equals("0"))
+    {
+        thisVote = "<span style='display: block; width: 100px; height: 20px; background: url(/public/images/whiterating.png) 0 0;'>" + "<span style='display: block;width:" + m_inPercent + "%;height:20px;background: url(/public/images/redrating.png) 0 0;'></span>" +
+           "</span>" +
+           "<span class=\"smallText\">Tổng số đánh giá: <span itemprop=\"ratingCount\">" + Model.Substring(Model.IndexOf(",") + 1) + "</span> | Đánh giá: Chưa có";
+    }
+
+    else
+    {
+        thisVote = "<span style='display: block; width: 100px; height: 20px; background: url(/public/images/whiterating.png) 0 0;'>" + "<span style='display: block;width:" + m_inPercent + "%;height:20px;background: url(/public/images/redrating.png) 0 0;'></span>" +
+ "</span>" +
+ "<span class=\"smallText\">Tổng số đánh giá: <span itemprop=\"ratingCount\">" + Model.Substring(Model.IndexOf(",") + 1) + "</span> | Đánh giá: <span itemprop=\"ratingValue\">" + Double.Parse(Model.Substring(0, Model.IndexOf(","))).ToString("##.##");
+    }
+
+    }
+<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
+    <meta itemprop="bestRating" content="5" />
+    <meta itemprop="worstRating" content="1">
+    <meta itemprop="ratingValue" content="@Model.Substring(0, Model.IndexOf(",")) %>" />
+    @Html.Raw(thisVote)
+</div>

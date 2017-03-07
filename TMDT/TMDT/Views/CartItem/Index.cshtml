@@ -1,0 +1,83 @@
+﻿@model TMDT.Logic.ShoppingCartViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Shopping Cart";
+}
+<link href="~/public/css/cart.css" rel="stylesheet" />
+<link href="~/public/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+<script type="text/javascript">
+    $(function () {
+        $(".RemoveLink").click(function () {
+            var recordToDelete = $(this).data("id");
+            if (recordToDelete != '') {
+                $.post("/CartItem/RemoveFromCart", { "id": recordToDelete });
+            }
+        });
+    });
+</script>
+<div class="content">
+    <div class="content_top">
+        <div class="heading">
+            <h3>Giỏ hàng</h3>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="section group">
+        @if (TempData["Notice"] != null)
+        { <div class="alert alert-warning">
+            @TempData["Notice"]
+        </div>}
+        @using (Html.BeginForm("Update", "CartItem", FormMethod.Post))
+        {
+            <table id="cart" class="table table-hover table-condensed">
+                <thead>
+                    <tr>
+                        <th style="width:30%;font-weight:bolder;">Sản phẩm</th>
+                        <th style="width:5%;font-weight:bolder;">Giá</th>
+                        <th style="width:5%;font-weight:bolder;" class="text-center">Số lượng</th>
+                        <th style="width:10%;font-weight:bolder;" class="text-center">Tên người bán</th>
+                        <th style="width:8%;font-weight:bolder;" class="text-center">Tổng cộng</th>
+                        <th style="width:10%;font-weight:bolder;">Cập nhật/Xóa</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.CartItems)
+                    {
+                        <tr id="row-@item.ItemID">
+                            <td data-th="Product">
+                                <div class="row">
+                                    <div class="col-sm-2 hidden-xs"><img src="@Url.Content("/public/MyImages/"+Html.DisplayFor(modelitem => item.Product.Image))" class="img-responsive" /></div>
+                                    <div class="col-sm-6">
+                                        <h4 class="nomargin">@item.Product.ProductName</h4>
+                                    </div>
+                                </div>
+                            </td>
+                            <td data-th="Price">@String.Format("{0:n0}", item.Product.Price)</td>
+                            <td data-th="Quantity">
+                                <input type="text" id="quantity" name="quantity" class="form-control text-center" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="@item.Quantity" />
+                            </td>
+                            <td class="text-center">@item.Product.Account.UserName</td>
+                            <td data-th="Subtotal" class="text-center">@String.Format("{0:n0}", item.Product.Price * item.Quantity)</td>
+                            <td class="actions" data-th="">
+                                <button class="btn btn-info btn-sm" value="update"><i class="fa fa-refresh"></i></button>
+
+                                <button class="btn btn-danger btn-sm RemoveLink" data-id="@item.ItemID"><i class="fa fa-trash-o"></i></button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td><a href="/Home/Index" class="btn btn-warning"><i class="fa fa-angle-left"></i> Tiếp tục mua hàng</a></td>
+                        <td colspan="2" class="hidden-xs"></td>
+                        <td colspan="1" class="hidden-xs" align="right"><p style="font-weight:bolder;">Thành tiền</p></td>
+                        <td class="hidden-xs text-center"><strong style="color:red;font-weight:bolder;font-size:20px;">@String.Format("{0:n0}", Model.CartTotal)</strong></td>
+                        <td><a href="@Url.Action("Payment", "CartItem")" class="btn btn-success btn-block">Đặt hàng <i class="fa fa-angle-right"></i></a></td>
+                    </tr>
+                </tfoot>
+            </table>
+        }
+    </div>
+</div>
+
+

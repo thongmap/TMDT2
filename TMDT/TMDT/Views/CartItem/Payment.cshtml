@@ -1,0 +1,143 @@
+﻿@model TMDT.Bill
+
+@{
+    ViewBag.Title = "Payment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("input[name='other']").off('change').on('change', function () {
+            $("#div1").toggle(this.checked);
+        });
+    });
+    function Submit() {
+            var name = $('#rename');
+            var mobile = $('#mobile');
+            var address = $('#address');
+            var email = $('#email');
+            if (name.val() != "")
+            {
+                if (mobile.val() != "")
+                {
+                    if (address.val() != "")
+                    {
+                        if (email.val() != "")
+                        {
+                            $("#form2").submit();
+                        }
+                        else
+                        {
+                            alert("Vui lòng nhập địa chỉ e-mail đặt hàng!");
+                        }
+                    }
+                    else
+                    {
+                        alert("Vui lòng nhập địa chỉ nhận hàng!");
+                    }
+                }
+                else
+                {
+                    alert("Vui lòng nhập sđt đặt hàng!");
+                }
+            }
+            else
+            {
+                alert("Vui lòng nhập tên người nhận!");
+            }
+        }
+</script>
+<div class="content">
+    <div class="content_top">
+        <div class="heading">
+            <h3>Thông tin đặt hàng</h3>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="section group">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div>
+                       <br />
+                    @using (Html.BeginForm("Payment", "CartItem", FormMethod.Post, new { id = "form2" }))
+                    {
+                        <div id="div1" class="form-horizontal">
+                            @Html.ValidationSummary(true)
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ShipName, htmlAttributes: new { @class = "control-label col-md-3" })
+                                <div class="col-md-7">
+                                    @Html.TextBoxFor(model => model.ShipName, "", new { @class = "form-control", @id = "rename" })
+                                    @Html.ValidationMessageFor(model => model.ShipName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ShipMobile, htmlAttributes: new { @class = "control-label col-md-3" })
+                                <div class="col-md-7">
+                                    @Html.TextBoxFor(model => model.ShipMobile, "", new { @class = "form-control", @id = "mobile" })
+                                    @Html.ValidationMessageFor(model => model.ShipMobile, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ShipAddress, htmlAttributes: new { @class = "control-label col-md-3" })
+                                <div class="col-md-7">
+                                    @Html.TextBoxFor(model => model.ShipAddress, "", new { @class = "form-control", @id = "address" })
+                                    @Html.ValidationMessageFor(model => model.ShipAddress,"",new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ShipEmail, htmlAttributes: new { @class = "control-label col-md-3" })
+                                <div class="col-md-7">
+                                    @Html.TextBoxFor(model => model.ShipEmail, "", new { @class = "form-control", @id = "email" })
+                                    @Html.ValidationMessageFor(model => model.ShipEmail, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        @Html.HiddenFor(model => model.AccountID)
+                        @Html.HiddenFor(model => model.SumMoney)
+
+                    <div class="form-group">
+                        <div class="col-md-offset-3 col-md-10">
+                            <input type="submit" value="Đặt hàng" class="btn btn-default" onclick="Submit();" />
+                        </div>
+                    </div>
+                    }
+               </div>
+                    </div>
+                <div class="col-lg-5">
+                    <br />
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th style="font-weight:bolder;">Sản phẩm</th>
+                                    <th style="font-weight:bolder;">Số lượng</th>
+                                    <th style="font-weight:bolder;">Giá</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (ViewBag.Item != null)
+                                {
+                                    foreach (cartitem item in ViewBag.Item)
+                                    {
+                                        <tr>
+                                            <td>@item.Product.ProductName</td>
+                                            <td>@item.Quantity</td>
+                                            <td>@item.Product.Price</td>
+                                        </tr>
+                                    }
+                                }
+                                <tr>
+                                    <td></td>
+                                    <td style="font-weight:bolder;font-size:larger;">Thành tiền</td>
+
+                                    <td style="font-weight:bolder;font-size:larger;color:red;">@if (Model != null)
+                                    {@Model.SumMoney}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

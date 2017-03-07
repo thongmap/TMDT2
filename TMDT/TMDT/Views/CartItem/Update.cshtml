@@ -1,0 +1,15 @@
+﻿@model TMDT.cartitem
+@{
+    ViewBag.Title = "Update";
+}
+<h2>Update</h2>
+@foreach(var item in ViewBag.Quantity)
+{
+    <p>@item.ProductID</p>
+    <p>@item.Quantity</p>
+    <p>@item.ItemID</p>
+    <p>@item.CartID</p>
+    <p>@item.CreatedDate</p>
+}
+
+   

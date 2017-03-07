@@ -1,0 +1,69 @@
+﻿@model TMDT.Account
+
+@{
+    ViewBag.Title = "ChangeInfo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    function ValidatePass() {
+        var pass1 = document.getElementById("pass").value;
+        var pass2 = document.getElementById("pass2").value;
+        if (pass1 != pass2) {
+            document.getElementById("verify").innerHTML = "*";
+            document.getElementById("verify1").innerHTML = "";
+        }
+        else {
+            document.getElementById("verify1").innerHTML = "Mật khẩu trùng khớp";
+            document.getElementById("verify").innerHTML = "";
+        }
+    }
+</script>
+<div class="content">
+    <div class="content_top">
+        <div class="heading">
+            <h3>Cập nhật mật khẩu của tài khoản</h3>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="section group">
+        @if (ViewBag.Message != null)
+        {<div class="alert alert-danger">
+            @ViewBag.Message 
+        </div>}
+
+        @using (Html.BeginForm("ChangePass", "Home", FormMethod.Post))
+        {
+            <br />
+            <div class="form-horizontal">       
+                <input type="hidden" name="userid" value="@Model.AccountID" />
+                <div class="form-group">
+                    <label class="control-label col-md-2">Mật khẩu cũ</label>
+                    <div class="col-md-6">
+                        <input type="password" class="form-control" id="pass3" name="pass3"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2">Mật khẩu mới</label>
+                    <div class="col-md-6">
+                        <input type="password" class="form-control" id="pass" name="pass" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2">Xác nhận mật khẩu mới</label>
+                    <div class="col-md-6">
+                        <input type="password" class="form-control" id="pass2" onkeyup="ValidatePass()" />
+                        <span id="verify" class="text-danger"></span>
+                        <span id="verify1" class="text-success"></span>
+                    </div>
+                </div>                
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Lưu" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        }
+        </div>
+    </div>
+
+

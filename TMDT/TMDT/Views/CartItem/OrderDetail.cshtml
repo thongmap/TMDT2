@@ -1,0 +1,81 @@
+﻿@model List<TMDT.DetailBill>
+
+@{
+    ViewBag.Title = "OrderDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string M_name = null;
+    bool check = false;
+    var user = Session["User"] as TMDT.Account;
+}
+<div class="content">
+    <div class="content_top">
+        <div class="heading">
+            <h3>Chi tiết đơn đặt hàng</h3>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="section group">
+        <br />
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-hover">
+                @foreach (var item in Model)
+                {
+                    <thead>
+                        @if (M_name == null)
+                        {
+                            M_name = item.Product.Account.UserName;
+
+                            <tr style="font-weight:bolder;">
+                                <td>Người bán: @item.Product.Account.UserName</td>
+                                <td> SĐT: @item.Product.Account.Phone</td>
+                                <td>Email: @item.Product.Account.Email</td>
+
+                                <td colspan="3">
+                                    @Html.ActionLink("Đánh Giá", "GetRating", "Cartitem", new { id = item.Product.Account.AccountID + "," + user.AccountID }, "")
+                                </td>
+                            </tr>
+                            <tr style="font-weight:bolder;">
+                                <th>Tên sản phẩm</th>
+                                <th>Số lượng</th>
+                                <th>Giá</th>
+                            </tr>
+                        }
+                        @if (M_name != item.Product.Account.UserName)
+                        {
+                            <tr style="height:10px;"></tr>
+                            if(!check)
+                            { 
+                            <tr style="font-weight:bolder;">
+                                
+                                <td>Người bán: @item.Product.Account.UserName</td>
+                                <td> SĐT: @item.Product.Account.Phone</td>
+                                <td>Email: @item.Product.Account.Email</td>
+                                <td colspan="3">
+                                    @Html.ActionLink("Đánh Giá", "GetRating", "Cartitem", new { id = item.Product.Account.AccountID + "," + user.AccountID }, "")
+                                </td>
+                            </tr>
+                            <tr style="font-weight:bolder;">
+                                
+                                <th>Tên sản phẩm</th>
+                                <th>Số lượng</th>
+                                <th>Giá</th>
+                            </tr>
+                            check = true;
+                            }
+                        }
+                    </thead>
+                    <tbody>
+                        
+                        <tr>                            
+                            <td>@item.Product.ProductName</td>
+                            <td>@item.Quantity</td>
+                            <td>@String.Format("{0:n0}", item.Product.Price * item.Quantity)</td>
+                        </tr>
+                        
+                    </tbody>
+                }
+            </table>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,58 @@
+﻿@model TMDT.Account
+
+@{
+    ViewBag.Title = "GetRating";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content">
+    <div class="content_top">
+        <div class="heading">
+            <h3>Đánh giá người bán</h3>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="section group">
+        <div>
+            <br />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.UserName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.UserName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Phone)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Phone)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Email)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Email)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Address)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Address)
+                </dd>
+                <dt>Đánh giá</dt>
+                <dd>@Html.Partial("_star", Model.AccountID)
+                @Html.Partial("_VoteNow", Model.Rating + "," + Model.NoRating)</dd>
+
+            </dl>
+        </div>
+    </div>
+</div>
+

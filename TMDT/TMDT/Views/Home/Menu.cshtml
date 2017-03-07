@@ -1,0 +1,22 @@
+﻿@model List<TMDT.Category>
+@{
+    string path = HttpContext.Current.Request.Url.AbsolutePath, active = "class=active"; int home = 0, cate = -1;
+    if ((path.Length == 1 || path.Length == 11) && (path == "/" || path == "/Home/Index"))
+    {
+        home = 1;
+    }
+    if (path.Length == 16 && path.Substring(0, 14) == "/Home/Category")
+    {
+        cate = Int16.Parse(path.Substring(15));
+    }
+}
+<div class="menu">
+    <ul>
+        <li @if (home == 1) { @active }><a href="@Url.Action("Index","Home")">Trang chủ</a></li>
+        @foreach (var item in Model)
+        {
+            <li @if (cate == item.CategoryID) { @active }><a href="@Url.Action("Category","Home", new { id=item.CategoryID})">@item.CategoryName</a></li>
+        }
+    </ul>
+    <div class="clear"></div>
+</div>

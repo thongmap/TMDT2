@@ -1,0 +1,71 @@
+﻿@model PagedList.IPagedList<TMDT.Order>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Danh sách đơn hàng";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<h2>Danh sách đơn hàng</h2>
+@using (Html.BeginForm())
+            {
+    <p>
+        Tháng: <select class="btn-dropbox" id="month" name="month">
+            <option value="-1">--Chọn--</option>
+            @for (int i = 1; i < 13; i++)
+            {<option @if (i == ViewBag.CurrentFilterM)
+        {
+           @Html.Raw("selected");
+            }  value="@i">Tháng @i</option>}
+                   </select>
+       Năm: <select class="btn-dropbox" id="year" name="year">
+            @for (int i = 2016; i < 2020; i++)
+            {
+        <option @if (i == ViewBag.CurrentFilterY)
+        {
+            @Html.Raw("selected");
+        }  value="@i">Năm @i</option>}
+        </select>
+        <input type="submit" class="btn btn-default" value="Lọc" />
+
+    </p>
+}
+<table class="table table-striped table-bordered table-hover">
+    <thead>
+   
+            <th>
+                Tên tài khoản
+            </th>
+            <th>
+                Ngày nâng cấp
+            </th>
+            <th>
+                Số lượng
+            </th>
+       
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Account.UserName)
+            </td>
+            <td>
+                @{
+                    string parameterValue = item.CreatedDate.Value.ToShortDateString();                }
+                 @Html.DisplayFor(modelItem => parameterValue)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+          
+        </tr>
+    }
+    <tr>
+        
+        <td>Tổng cộng:</td>
+        <td colspan="2">@ViewBag.Total</td>
+    </tr>
+</table>
+
+@Html.PagedListPager(Model, page => Url.Action("ListDonHang", new { page, currentmonth = ViewBag.CurrentFilterM, currentyear = ViewBag.CurrentFilterY }))
+
