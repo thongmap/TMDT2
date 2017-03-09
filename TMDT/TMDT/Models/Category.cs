@@ -20,7 +20,7 @@
         public int? AccountID { get; set; }
 
         [Required]
-        [Display(Name = "Tên m")]
+        [Display(Name = "Tên hạng mục")]
         [StringLength(50)]
         public string CategoryName { get; set; }
 

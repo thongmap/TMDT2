@@ -31,7 +31,7 @@
         [Display(Name = "Mật khẩu")]
         public string Pass { get; set; }
 
-        //[RegularExpression(@"(\\d{10})|(\\d{11})")]
+        [RegularExpression("^0[1-9]{9,10}", ErrorMessage = "Nhập chính xác số điện thoại")]
         [Required(ErrorMessage = "Yêu cầu nhập số điện thoại")]
         [StringLength(50)]
         [Display(Name = "Điện thoại")]
@@ -40,6 +40,7 @@
         //[RegularExpression(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*")]
         [Required(ErrorMessage = "Yêu cầu nhập email")]
         [StringLength(50)]
+        [EmailAddress(ErrorMessage ="Nhập đúng địa chỉ email")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Yêu cầu nhập địa chỉ")]

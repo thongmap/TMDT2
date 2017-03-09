@@ -179,8 +179,9 @@ namespace TMDT.Controllers
             int smtpPort = 25;
             string emailTo = new AdminDAO().getemail(id);
             string subject = "Mật khẩu của bạn đã được khôi phục";
+            string path = Server.MapPath(@"~/public/images/nenlogo.png");
             string body = string.Format(
-                "<img src='images / feature - pic1.jpg' alt='Banner' /><br/>Xin chào {0}.<br/>Bạn hoặc ai đó đã khôi phục lại mật khẩu của bạn. Mật khẩu hiện tại là 123456.", new AdminDAO().getname(id), Url.Action("ConfirmEmail", "Home", new
+                "<br/>Xin chào {0}.<br/>Bạn hoặc ai đó đã khôi phục lại mật khẩu của bạn. Mật khẩu hiện tại là 123456.", new AdminDAO().getname(id), Url.Action("ConfirmEmail", "Home", new
                 {
                     Token = id,
                     Email = new AdminDAO().getemail(id)
@@ -189,7 +190,7 @@ namespace TMDT.Controllers
             EmailService service = new EmailService();
 
             bool kq = service.Send(smtpUserName, smtpPassword, smtpHost, smtpPort,
-                emailTo, subject, body);
+                emailTo, subject, body,"");
             return View("AddUserNotification");
         }
 
@@ -263,7 +264,7 @@ namespace TMDT.Controllers
             EmailService service = new EmailService();
 
             bool kq = service.Send(smtpUserName, smtpPassword, smtpHost, smtpPort,
-                emailTo, subject, body);
+                emailTo, subject, body,"");
             return View("AddUserNotification");
         }
     }

@@ -11,6 +11,8 @@ using PagedList;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
 using TMDT.Logic;
+using System.Net.Mail;
+using System.Web.Mail;
 
 namespace TMDT.Controllers
 {
@@ -214,11 +216,16 @@ namespace TMDT.Controllers
                         int smtpPort = 25;
                         string emailTo = model.Email;
                         string subject = "Xác minh tài khoản của bạn";
+                        string path = Server.MapPath(@"/public/images/facebook.png");
+                        //now do the HTML formatting
+                        //@Request.Url.GetLeftPart(UriPartial.Authority)
                         string body = string.Format(
-                            "<img src='images / feature - pic1.jpg' alt='Banner' /><br/>Xin chào {0}.<br/>Cảm ơn bạn đã đăng kí tài khoản tại TATSHOP. Vui lòng nhấn vào đường dẫn bên dưới để hoàn tất đăng kí.<br/><a href=\"{1}\" title=\"Xác nhận tài khoản của bạn\">Xác nhận</a>", model.UserName, Url.Action("ConfirmEmail", "Home", new { Token = userid, Email = model.Email }, Request.Url.Scheme));
+                            "<img src=@'/public/images/facebook.png'/><br/>Xin chào {0}.<br/>Cảm ơn bạn đã đăng kí tài khoản tại TATSHOP. Vui lòng nhấn vào đường dẫn bên dưới để hoàn tất đăng kí.<br/><a href=\"{1}\" title=\"Xác nhận tài khoản của bạn\">Xác nhận</a>", model.UserName, Url.Action("ConfirmEmail", "Home", new { Token = userid, Email = model.Email }, Request.Url.Scheme));
+
+
                         EmailService service = new EmailService();
                         bool kq = service.Send(smtpUserName, smtpPassword, smtpHost, smtpPort,
-                            emailTo, subject, body);
+                            emailTo, subject, body,path);
                         model = new Account();
                         return RedirectToAction("Confirm", "Home", new { Email = user.Email });
                     }

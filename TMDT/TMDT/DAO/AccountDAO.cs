@@ -58,6 +58,7 @@ namespace TMDT.DAO
         {
             var user = db.Accounts.Find(id);
             user.Status = "true";
+            user.LockNote = "";
             db.SaveChanges();
         }
 
