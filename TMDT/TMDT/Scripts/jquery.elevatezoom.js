@@ -201,8 +201,6 @@ if ( typeof Object.create !== 'function' ) {
 					else{
 						lensWidth =  (self.options.zoomWindowWidth/self.widthRatio);
 					}
-					lensHeight *= 1.05;
-					lensWidth *= 1.05;
 
 					self.lensStyle = "background-position: 0px 0px;width: " + String((self.options.zoomWindowWidth)/self.widthRatio) + "px;height: " + String((self.options.zoomWindowHeight)/self.heightRatio)
 					+ "px;float: right;display: none;"
@@ -238,8 +236,8 @@ if ( typeof Object.create !== 'function' ) {
 					self.lensStyle = "background-position: 0px 0px;"
 						+ "float: left;display: none;"
 						+ "border: " + String(self.options.borderSize) + "px solid " + self.options.borderColour+";"
-						+ "width:"+ String(self.options.lensSize*1.05) +"px;"
-						+ "height:"+ String(self.options.lensSize*1.05)+"px;"
+						+ "width:"+ String(self.options.lensSize) +"px;"
+						+ "height:"+ String(self.options.lensSize)+"px;"
 						+ "background-repeat: no-repeat;position: absolute;";
 
 
@@ -619,8 +617,8 @@ if ( typeof Object.create !== 'function' ) {
 								lensWidth =  String((self.options.zoomWindowWidth/self.widthRatio));
 							}            
 
-							self.zoomLens.css('width', lensWidth*1.05);    
-							self.zoomLens.css('height', lensHeight*1.05); 
+							self.zoomLens.css('width', lensWidth);    
+							self.zoomLens.css('height', lensHeight); 
 
 							if(self.options.tint){    
 								self.zoomTintImage.css('width', self.nzWidth);    
@@ -1421,8 +1419,8 @@ if ( typeof Object.create !== 'function' ) {
 
 					if(self.zoomLens){
 
-						self.zoomLens.css('width', lensWidth*1.05);    
-						self.zoomLens.css('height', lensHeight*1.05); 
+						self.zoomLens.css('width', lensWidth);    
+						self.zoomLens.css('height', lensHeight); 
 
 
 					}

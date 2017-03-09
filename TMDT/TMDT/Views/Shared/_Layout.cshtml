@@ -60,12 +60,41 @@
                         @if (user != null)
                         {
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span style="color:green;">@user.UserName</span><b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    @if (user.Level == 1 && user.ExpiryDate.Subtract(DateTime.Now).Days <= 15 && user.ExpiryDate.Subtract(DateTime.Now).Days > 5)
+                                    { <span style="color:yellow">
+                                        @user.UserName
+                                    </span>
+                                    }
+                                    else 
+                                    {
+                                        if (user.Level == 1 && user.ExpiryDate.Subtract(DateTime.Now).Days <= 5)
+                                        { <span style="color:red">
+                                                @user.UserName
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span style="color:green">
+                                                @user.UserName
+                                            </span>
+                                        }
+                                    }
+                                    
+                               <b class="caret"></b>
+</a>
                                 <ul class="dropdown-menu">
                                     <li class="divider"></li>
                                     <li>
                                         <a href="@Url.Action("AccountInfo", "Home", new { id=@user.AccountID})">Thông tin tài khoản</a>
                                     </li>
+                                    @if (user.Level == 1)
+                                    {
+                                    <li class="divider"></li>
+                                    <li>
+                                        <a href="@Url.Action("Index", "Merchant", new { id = @user.AccountID })">Xem sản phẩm bán</a>
+                                    </li>
+                                    }
                                     <li class="divider"></li>
                                     <li>
                                         <a href="@Url.Action("Order", "CartItem", new { id=@user.AccountID})">Xem đơn đặt hàng</a>

@@ -145,6 +145,27 @@ namespace TMDT.Logic
             }
             return itemCount;
         }
+        public string RemoveSellerItem (int id)
+        {
+            var cartItem = storeDB.ShoppingCartItems.Where(cart => cart.CartID.Equals(ShoppingCartId) && cart.Product.AccountID==id);
+
+            string itemrm = "";
+
+            if (cartItem != null)
+            {
+                foreach (cartitem item in cartItem)
+                {
+                    itemrm += item.Product.ProductName + ",";
+                    storeDB.ShoppingCartItems.Remove(item);
+                }
+                if(!String.IsNullOrEmpty(itemrm))
+                itemrm = itemrm.Remove(itemrm.LastIndexOf(","));
+                // Save changes
+                storeDB.SaveChanges();
+            }
+            return itemrm;
+       
+        } 
         public void EmptyCart()
         {
             var cartItems = storeDB.ShoppingCartItems.Where(

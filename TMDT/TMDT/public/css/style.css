@@ -1601,18 +1601,9 @@ body {
 .detailscol .detailsright { float:left; width:300px}
 .img_detail
 {
-    max-height:200px;
-    max-width:300px;
-    min-height:150px;
-    min-width:150px;
+    height:200px;
+    width:300px;
     object-fit:contain;
-}
-.gal_detail
-{
-    max-height: 50px;
-    max-width: 50px;
-    min-height:10px;
-    min-width:10px;
 }
 .login_button{
 	display: inline-block;

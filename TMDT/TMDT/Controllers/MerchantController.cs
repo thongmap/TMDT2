@@ -170,6 +170,23 @@ namespace TMDT.Controllers
 
         public ActionResult ProductInfo(int id)
         {
+            var a = new AccountDAO();
+            var user = Session["User"] as TMDT.Account;
+            if (user == null)
+            {
+                RedirectToAction("Login", "Home");
+            }
+            DaysLeft i = new AccountDAO().CountDayLeft(int.Parse(user.AccountID.ToString()));
+            if (i.Days < 1)
+            {
+                new AccountDAO().DownGradeAcc(user.AccountID);
+                TempData["Expire"] = "Bạn đã hết hạn đăng sản phẩm !!!";
+                RedirectToAction("Upgrade", "Home");
+            }
+            if (user.Level == 2 || a.CountDayLeft(user.AccountID).Days == 0)
+            {
+                return RedirectToAction("Upgrade", "Home");
+            }
             Product product = new ProductDAO().CTSP(id);
             return View(product);
         }

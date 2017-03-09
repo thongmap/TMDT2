@@ -131,16 +131,18 @@ namespace TMDT.Controllers
                     if (user.Status == "true")
                     {
                         Session["User"] = user;
-
+                        string notice="";
                         DaysLeft daysleft = dao.CountDayLeft(user.AccountID);
                         Session["DaysLeft"] = daysleft;
                         var cart = ShoppingCart.GetCart(this.HttpContext, null);
+                        notice = cart.RemoveSellerItem(user.AccountID);
                         cart.MigrateCart(username);
                         Session.Remove("CartID");
-
+                        if (!String.IsNullOrEmpty(notice))
+                            TempData["notice"] = "Bạn không thể mua các sản phẩm: "+ notice+" vì bạn bán chúng";
                         Session["CartCount"] = ShoppingCart.GetCart(this.HttpContext, username).GetCount();
                         if (cart.GetCount() > 0)
-                            return RedirectToAction("Index", "CartItem");
+                                      return RedirectToAction("Index", "CartItem");
                         return RedirectToAction("Index");
                     }
                     else

@@ -17,7 +17,7 @@
              {
                  if (temp.IndexOf("|") < 0) { break; }
                 <a href="#" data-image="/public/MyImages/@(temp.Substring(0, temp.IndexOf("|")))">
-                    <img class="gal_detail" id="img_01" src="~/public/MyImages/@(temp.Substring(0, temp.IndexOf("|")))" />
+                    <img id="img_01" src="~/public/MyImages/@(temp.Substring(0, temp.IndexOf("|")))" width="50px" height="50px" />
                 </a>
                  temp = temp.Substring(temp.IndexOf("|") + 1);
              }

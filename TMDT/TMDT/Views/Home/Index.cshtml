@@ -5,6 +5,10 @@
 }
 @model IEnumerable<TMDT.Product>
 <div class="content">
+    @if (TempData["Notice"] != null)
+    { <div class="alert alert-warning">
+        @TempData["Notice"]
+    </div>}
     <div class="content_top">
         <div class="heading">
             <h3>Sản phẩm mới</h3>

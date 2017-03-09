@@ -1,4 +1,34 @@
 ﻿<script src="~/Scripts/jquery.elevatezoom.js"></script>
+<script>
+    var interval = undefined;
+    $(document).ready(function () {
+        interval = setInterval(getNext, 2000); // milliseconds
+        $('#next').on('click', getNext);
+        $('#prev').on('click', getPrev);
+    });
+
+    function getNext() {
+        var $curr = $('.gallery_01 img:visible'),
+            $next = ($curr.next().length) ? $curr.next() : $('.gallery_01 img').first();
+
+        transition($curr, $next);
+    }
+
+    function getPrev() {
+        var $curr = $('.gallery_01 img:visible'),
+            $next = ($curr.prev().length) ? $curr.prev() : $('.gallery_01 img').last();
+        transition($curr, $next);
+    }
+
+    function transition($curr, $next) {
+        clearInterval(interval);
+
+        $next.css('z-index', 2).fadeIn('slow', function () {
+            $curr.hide().css('z-index', 0);
+            $next.css('z-index', 1);
+        });
+    }
+    </script>
 @model TMDT.Product
 @{
     ViewBag.Title = "Details";
@@ -12,81 +42,78 @@
         <div class="clear"></div>
     </div>
     <div class="section group">
-            <br />
-            <div class="col-md-6">
-                <div>
-                    <img id="img_01" src="~/public/MyImages/@(Model.Image.Substring(0,Model.Image.IndexOf("|")))" class="img_detail" />
-                </div>
-                <div id="gallery_01">
-                    @{ string temp = Model.Image;
-                     for (int i = 0; i < 8; i++)
-                     {
-                         if (temp.IndexOf("|") < 0) { break; }
-
-                        <a href="#" data-image="/public/MyImages/@(temp.Substring(0, temp.IndexOf("|")))">
-                            <img class="gal_detail" id="img_01" src="~/public/MyImages/@(temp.Substring(0, temp.IndexOf("|")))" />
-                        </a>
+        <br />
+        <div class="col-md-6">
+            <div>
+                <img id="img_01" src="~/public/MyImages/@(Model.Image.Substring(0,Model.Image.IndexOf("|")))" class="img_detail" />
+            </div>
+            <div id="gallery_01">
+                @{ string temp = Model.Image;
+                        for (int i = 0; i < 8; i++)
+                        {
+                            if (temp.IndexOf("|") < 0) { break; }
+                            if (i == 4) { <br /> }
+                    <a href="#" data-image="/public/MyImages/@(temp.Substring(0, temp.IndexOf("|")))">
+                        <img class="gal_detail" id="img_01" src="~/public/MyImages/@(temp.Substring(0, temp.IndexOf("|")))" width="50px" height="50px" />
+                    </a>
 
                          temp = temp.Substring(temp.IndexOf("|") + 1);
                      }
-                    }
-                </div>
+                }
+                <button id="prev">Prev</button>
+                <button id="next">Next</button>
             </div>
-            <div class="col-md-6">
-                <dl class="dl-horizontal">                       
-                    <dt>
-                        <label>Người bán</label>
-                    </dt>
+        </div>
+        <div class="col-md-6">
+            <dl class="dl-horizontal">
+                <dt>
+                    <label>Người bán</label>
+                </dt>
 
-                    <dd>
-                        @Html.DisplayFor(model => model.Account.UserName)
-                    </dd>
-                    <dt>
-                        <label>Đánh giá</label>
-                    </dt>
-                    <dd>
-                        @Html.Action("GetRating","Admin", new { m = (Model.Account.Rating + "," + Model.Account.NoRating) })
-                    </dd>
-                    <dt>Tên loại</dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.Category.CategoryName)
-                    </dd>                
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Info)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.Info)
-                    </dd>
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Quantity)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.Quantity)
-                    </dd>
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Price)
-                    </dt>
-                    <dd style="color:red;font-weight:bold">
-                        @Html.DisplayFor(model => model.Price)
-                    </dd>
-                    <dt>
-                        @Html.DisplayNameFor(model => model.CreatedDate)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.CreatedDate.Value.Date)
-                    </dd>
-                </dl>
-            </div>      
+                <dd>
+                    @Html.DisplayFor(model => model.Account.UserName)
+                </dd>
+                <dt>
+                    <label>Đánh giá</label>
+                </dt>
+                <dd>
+                    @Html.Action("GetRating","Admin", new { m = (Model.Account.Rating + "," + Model.Account.NoRating) })
+                </dd>
+                <dt>Loại sản phẩm</dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Category.CategoryName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Quantity)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Quantity)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Price)
+                </dt>
+                <dd style="color:red;font-weight:bold">
+                    @Html.DisplayFor(model => model.Price)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.CreatedDate)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.CreatedDate.Value.Date)
+                </dd>
+            </dl>
+        </div>
         <div class="col-md-3">
             <div class="add-cart">
                 <br />
                 <h4> @Html.ActionLink("Thêm vào giỏ", "AddToCart", "CartItem", new { id = Model.ProductID }, "")</h4>
-                
+
             </div>
         </div>@if (Model.Account.Rating < 2 && Model.Account.Rating !=0)
         { <span style="color:red;font-style:italic">(Người bán này có điểm đánh giá thấp, cẩn thận khi mua hàng)</span>}
-        </div>
-        <script>
+    </div>
+    <script>
             $("#img_01").elevateZoom({ gallery: 'gallery_01', cursor: 'pointer', galleryActiveClass: 'active', imageCrossfade: true, loadingIcon: 'http://www.elevateweb.co.uk/spinner.gif' });
             $("#img_01").bind("click", function (e) {
                 var ez = $('#img_01').data('elevateZoom');
@@ -94,6 +121,17 @@
 
                 return false;
             });
-        </script>
+    </script>
+
+    <br />
+    <div class="content_top">
+        <div class="heading">
+            <h3>@Html.DisplayNameFor(model => model.Info)</h3>
+        </div>
+        <div class="clear"></div>
     </div>
+    <div class="section group">
+        @Html.DisplayFor(model => model.Info)
+    </div>
+</div>
 
