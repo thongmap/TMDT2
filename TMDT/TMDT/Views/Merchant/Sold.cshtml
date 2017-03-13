@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "Sold";
+    Layout = "~/Views/Shared/_LayoutMerchant.cshtml";
+}
+
+<div class="content">
+    <div class="content_top">
+        <div class="heading">
+            <h3>Danh sách đã bán</h3>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="section group">
+        <table class="table table-default table-striped table-bordered">
+            <thead>
+            <th>STT</th>
+            <th>Hình ảnh</th>
+            <th>Tên</th>
+            <th>Loại sản phẩm</th>
+            <th>Giá bán ($)</th>
+            <th>Số lượng tồn</th>
+            <th></th>
+            </thead>
+            <tbody>
+                @{int i = 1; }
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@i</td>
+                        <td><img src="@Url.Content("/public/MyImages/" + Html.DisplayFor(modelitem => item.Image))" width="50px" height="50px" /></td>
+                        <td>@Html.DisplayFor(modelitem => item.ProductName)</td>
+                        <td>@Html.DisplayFor(modelitem => item.Category.CategoryName)</td>
+                        <td>@Html.DisplayFor(modelitem => item.Price)</td>
+                        <td>@Html.DisplayFor(modelitem => item.Quantity)</td>
+                        <td>@Html.ActionLink("Xem Chi tiết", "ProductInfo", "Merchant", new { id = item.ProductID }, "")</td>
+                        @{ i++;}
+                    </tr>
+
+
+                            }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+

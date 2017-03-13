@@ -1,39 +1,11 @@
 ﻿<script src="~/Scripts/jquery.elevatezoom.js"></script>
-<script>
-    var interval = undefined;
-    $(document).ready(function () {
-        interval = setInterval(getNext, 2000); // milliseconds
-        $('#next').on('click', getNext);
-        $('#prev').on('click', getPrev);
-    });
-
-    function getNext() {
-        var $curr = $('.gallery_01 img:visible'),
-            $next = ($curr.next().length) ? $curr.next() : $('.gallery_01 img').first();
-
-        transition($curr, $next);
-    }
-
-    function getPrev() {
-        var $curr = $('.gallery_01 img:visible'),
-            $next = ($curr.prev().length) ? $curr.prev() : $('.gallery_01 img').last();
-        transition($curr, $next);
-    }
-
-    function transition($curr, $next) {
-        clearInterval(interval);
-
-        $next.css('z-index', 2).fadeIn('slow', function () {
-            $curr.hide().css('z-index', 0);
-            $next.css('z-index', 1);
-        });
-    }
-    </script>
+<script src="~/Scripts/jquery.prettyGallery.js"></script>
 @model TMDT.Product
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <div class="content">
     <div class="content_top">
         <div class="heading">
@@ -47,22 +19,27 @@
             <div>
                 <img id="img_01" src="~/public/MyImages/@(Model.Image.Substring(0,Model.Image.IndexOf("|")))" class="img_detail" />
             </div>
-            <div id="gallery_01">
-                @{ string temp = Model.Image;
+           
+            <div id="gallery_01" >
+              
+                    @{ string temp = Model.Image;
                         for (int i = 0; i < 8; i++)
                         {
                             if (temp.IndexOf("|") < 0) { break; }
-                            if (i == 4) { <br /> }
-                    <a href="#" data-image="/public/MyImages/@(temp.Substring(0, temp.IndexOf("|")))">
-                        <img class="gal_detail" id="img_01" src="~/public/MyImages/@(temp.Substring(0, temp.IndexOf("|")))" width="50px" height="50px" />
-                    </a>
-
-                         temp = temp.Substring(temp.IndexOf("|") + 1);
-                     }
-                }
-                <button id="prev">Prev</button>
-                <button id="next">Next</button>
+                            if (i == 4)
+                            {
+                    <br /> }
+                           
+                                <a href="#" data-image="/public/MyImages/@(temp.Substring(0, temp.IndexOf("|")))">
+                                    <img id="img_01" src="~/public/MyImages/@(temp.Substring(0, temp.IndexOf("|")))" width="50px" height="50px" />
+                                </a>
+                           
+                            temp = temp.Substring(temp.IndexOf("|") + 1);
+                        }
+                    }
+                
             </div>
+            
         </div>
         <div class="col-md-6">
             <dl class="dl-horizontal">
@@ -122,7 +99,7 @@
                 return false;
             });
     </script>
-
+    
     <br />
     <div class="content_top">
         <div class="heading">

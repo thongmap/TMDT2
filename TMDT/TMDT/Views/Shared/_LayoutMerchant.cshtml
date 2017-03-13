@@ -11,22 +11,21 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     @*<link href="~/public/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/public/css/font-awesome.min.css" rel="stylesheet" />
-    <link href="~/public/css/bootstrap-theme.css" rel="stylesheet" />
-    <link href="~/public/css/jquery-ui.css" rel="stylesheet" />
-    <link href="~/public/css/bootstrap-slider.min.css" rel="stylesheet" />
-    
-    <link href="~/public/css/bootstrap-social.css" rel="stylesheet" />
-    <link href="~/public/css/cssprogress.css" rel="stylesheet" />
-    <script src="~/public/js/jquery-1.10.2.min.js"></script>
-    <script src="~/public/js/jquery-ui.js"></script>
-    <script src="~/public/js/bootstrap.min.js"></script>
-    <script src="~/public/js/bootstrap-slider.min.js"></script>*@
+        <link href="~/public/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="~/public/css/bootstrap-theme.css" rel="stylesheet" />
+        <link href="~/public/css/jquery-ui.css" rel="stylesheet" />
+        <link href="~/public/css/bootstrap-slider.min.css" rel="stylesheet" />
+
+        <link href="~/public/css/bootstrap-social.css" rel="stylesheet" />
+        <link href="~/public/css/cssprogress.css" rel="stylesheet" />
+        <script src="~/public/js/jquery-1.10.2.min.js"></script>
+        <script src="~/public/js/jquery-ui.js"></script>
+        <script src="~/public/js/bootstrap.min.js"></script>
+        <script src="~/public/js/bootstrap-slider.min.js"></script>*@
     @Styles.Render("~/bundles/css")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/modernizr")
-    <link rel="stylesheet" type="text/css" href="~/Scripts/slick/slick.css">
-    <link rel="stylesheet" type="text/css" href="~/Scripts/slick/slick-theme.css">
+
 </head>
 <body>
     <div class="wrap">
@@ -39,20 +38,23 @@
                     <ul>
                         <li><a href="#" data-toggle="modal" data-target="#myModal">Tìm kiếm nâng cao</a></li>
                         <li><a href="/Merchant/Sell">Đăng sản phẩm mới</a></li>
-                        <li><a href="/CartItem/Index">Giỏ hàng 
-                         @if (Session["CartCount"] != null)
-                        {
-                            <span>
-                                (@Session["CartCount"])
-                            </span>
-                        }
-                        else
-                        {
-                            <span>
-                                (0)
-                            </span>
-                        }
-                        </a></li>
+                        <li>
+                            <a href="/CartItem/Index">
+                                Giỏ hàng
+                                @if (Session["CartCount"] != null)
+                                {
+                                    <span>
+                                        (@Session["CartCount"])
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span>
+                                        (0)
+                                    </span>
+                                }
+                            </a>
+                        </li>
                         @if (user == null)
                         {
                             <li><a href="/Home/Register">Đăng kí</a></li>
@@ -67,12 +69,12 @@
                                         @user.UserName
                                     </span>
                                     }
-                                    else 
+                                    else
                                     {
                                         if (user.Level == 1 && user.ExpiryDate.Subtract(DateTime.Now).Days <= 5)
                                         { <span style="color:red">
-                                                @user.UserName
-                                            </span>
+                                        @user.UserName
+                                    </span>
                                         }
                                         else
                                         {
@@ -81,9 +83,9 @@
                                             </span>
                                         }
                                     }
-                                    
-                               <b class="caret"></b>
-</a>
+
+                                    <b class="caret"></b>
+                                </a>
                                 <ul class="dropdown-menu">
                                     <li class="divider"></li>
                                     <li>
@@ -91,10 +93,10 @@
                                     </li>
                                     @if (user.Level == 1)
                                     {
-                                    <li class="divider"></li>
-                                    <li>
-                                        <a href="@Url.Action("Index", "Merchant", new { id = @user.AccountID })">Xem sản phẩm bán</a>
-                                    </li>
+                                        <li class="divider"></li>
+                                        <li>
+                                            <a href="@Url.Action("Index", "Home", new { id = @user.AccountID })">Quay lại mua hàng</a>
+                                        </li>
                                     }
                                     <li class="divider"></li>
                                     <li>
@@ -119,7 +121,7 @@
                 </div>
             </div>
             <div class="header_bottom">
-                @{Html.RenderAction("Menu", "Home");}
+                @{Html.RenderAction("Menu", "Merchant");}
                 <div class="search_box">
                     @using (Html.BeginForm("ReturnSearch", "Home", FormMethod.Get))
                     {

@@ -36,7 +36,22 @@ namespace TMDT.Controllers
                 }
             }
         }
-
+        [ChildActionOnly]
+        public ActionResult Menu()
+        {
+            var model = new CategoryDAO().ListAll();
+            return PartialView(model);
+        }
+        public ActionResult Sold()
+        {
+            var user = Session["User"] as Account;
+            if (user != null)
+            {
+                var model = new ProductDAO().ListSold(user.AccountID);
+                return View(model);
+            }
+            return RedirectToAction("Login", "Home");
+        }
         [HttpGet]
         public ActionResult Sell()
         {
@@ -129,13 +144,13 @@ namespace TMDT.Controllers
             var user = Session["User"] as TMDT.Account;
             if (user == null )
             {
-                RedirectToAction("Login", "Home");
+                return RedirectToAction("Login", "Home");
             }
                 DaysLeft i = new AccountDAO().CountDayLeft(int.Parse(user.AccountID.ToString()));
             if (i.Days < 1)
             {
                 new AccountDAO().DownGradeAcc(model.AccountID);
-                RedirectToAction("Upgrade", "Home");
+                return RedirectToAction("Upgrade", "Home");
             }
             if (ModelState.IsValid && Session["fileUpload"] != null)
             {                
@@ -174,14 +189,14 @@ namespace TMDT.Controllers
             var user = Session["User"] as TMDT.Account;
             if (user == null)
             {
-                RedirectToAction("Login", "Home");
+                return RedirectToAction("Login", "Home");
             }
             DaysLeft i = new AccountDAO().CountDayLeft(int.Parse(user.AccountID.ToString()));
             if (i.Days < 1)
             {
                 new AccountDAO().DownGradeAcc(user.AccountID);
                 TempData["Expire"] = "Bạn đã hết hạn đăng sản phẩm !!!";
-                RedirectToAction("Upgrade", "Home");
+               return RedirectToAction("Upgrade", "Home");
             }
             if (user.Level == 2 || a.CountDayLeft(user.AccountID).Days == 0)
             {

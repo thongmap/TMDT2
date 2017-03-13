@@ -1,0 +1,23 @@
+﻿@model List<TMDT.Category>
+@{
+    string path = HttpContext.Current.Request.Url.AbsolutePath, active = "class=active"; int home = 0, cate = -1;
+    if (path == "/Merchant/Index" || path == "/Merchant")
+    {
+        home = 1;
+    }
+    if (path== "/Merchant/Sold")
+    {
+        cate = 1;
+    }
+}
+<div class="menu">
+    <ul>
+        <li @if (home == 1) { @active }><a href="@Url.Action("Index","Merchant")">Trang chủ</a></li>
+       
+            <li @if (cate == 1){ @active }> <a href="@Url.Action("Sold","Merchant")">Danh sách bán</a></li>
+        <li> <a href="#">Danh sách nổi bật</a></li>
+        <li> <a href="#">Danh sách chưa bán</a></li>
+        
+    </ul>
+    <div class="clear"></div>
+</div>

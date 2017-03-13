@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutMerchant.cshtml";
 }
 
 <div class="content">
@@ -13,24 +13,34 @@
         <div class="clear"></div>
     </div>
     <div class="section group">
-        @{int i = 0; }
-        @foreach (var item in Model)
-        {
-            <div class="grid_1_of_4 images_1_of_4">
-                <a href="@Url.Action("Details","Home", new { id=item.ProductID})"><img src="@Url.Content("/public/MyImages/"+Html.DisplayFor(modelitem => item.Image))" /></a>
-                <h2>@Html.DisplayFor(modelitem => item.ProductName)</h2>
-                <div class="price-details">
-                    <div class="add-cart">
-                        <h4> @Html.ActionLink("Xem chi tiết", "ProductInfo", "Merchant", new { id = item.ProductID }, "")</h4>
-                    </div>
-                    <div class="price-number">
-                        <p><span class="rupees">@Html.DisplayFor(modelitem => item.Price.Value)</span></p>
-                    </div>
-                    <div class="clear"></div>
-                </div>
-                @{i++; }
-                @if (i > 4) { break; }
-            </div>
-        }
+        <table class="table table-default table-striped table-bordered">
+            <thead>
+                <th>STT</th>
+                <th>Hình ảnh</th>
+                <th>Tên</th>
+                <th>Loại sản phẩm</th>
+                <th>Giá bán ($)</th>
+                <th>Số lượng tồn</th>
+                <th></th>
+            </thead>
+            <tbody>
+                @{int i = 1; }
+                @foreach (var item in Model)
+                {
+                  <tr>
+                      <td>@i</td>
+                      <td><img src="@Url.Content("/public/MyImages/" + Html.DisplayFor(modelitem => item.Image))" width="50px" height="50px" /></td>
+                      <td>@Html.DisplayFor(modelitem => item.ProductName)</td>
+                      <td>@Html.DisplayFor(modelitem => item.Category.CategoryName)</td>
+                      <td>@Html.DisplayFor(modelitem => item.Price)</td>
+                      <td>@Html.DisplayFor(modelitem => item.Quantity)</td>
+                      <td>@Html.ActionLink("Xem Chi tiết", "ProductInfo", "Merchant", new { id = item.ProductID }, "")</td>
+                 @{ i++;}
+                  </tr>
+                  
+
+                }
+            </tbody>
+        </table>
     </div>
 </div>

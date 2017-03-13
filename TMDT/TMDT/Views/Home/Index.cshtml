@@ -4,6 +4,7 @@
 
 }
 @model IEnumerable<TMDT.Product>
+
 <div class="content">
     @if (TempData["Notice"] != null)
     { <div class="alert alert-warning">
@@ -16,21 +17,25 @@
         <div class="clear"></div>
     </div>
     <div class="section group">
-        @foreach (var item in listnewproduct)
-        {
-            <div class="grid_1_of_4 images_1_of_4">
-                <a href="@Url.Action("Details","Home", new { id=item.ProductID})"><img src="@Url.Content("/public/MyImages/"+Html.DisplayFor(modelitem => item.Image))" /></a>
-                <h2>@Html.DisplayFor(modelitem => item.ProductName)</h2>
-                <div class="price-details">
-                    <div class="add-cart">
-                        <h4> @Html.ActionLink("Thêm vào giỏ", "AddToCart", "CartItem", new { id = item.ProductID }, "")</h4>
-                    </div>
-                    <div class="price-number">
-                        <p><span class="rupees">@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</span></p>
+        <div class="myslider">
+            @foreach (var item in listnewproduct)
+            {
+                <div>
+                    <div class="grid_1_of_4 images_1_of_4" style="width:96%;height:100%;padding:7%">
+                        <a href="@Url.Action("Details","Home", new { id=item.ProductID})"><img src="@Url.Content("/public/MyImages/"+Html.DisplayFor(modelitem => item.Image))" /></a>
+                        <h2>@Html.DisplayFor(modelitem => item.ProductName)</h2>
+                        <div class="price-details">
+                            <div class="add-cart">
+                                <h4> @Html.ActionLink("Thêm vào giỏ", "AddToCart", "CartItem", new { id = item.ProductID }, "")</h4>
+                            </div>
+                            <div class="price-number">
+                                <p><span class="rupees">@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</span></p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        }
+            }
+        </div>
     </div>
     @foreach (Category itemCat in ViewBag.Category)
     {
@@ -67,3 +72,15 @@
         </div>
     }
 </div>
+<script src="~/Scripts/jquery-1.10.2.intellisense.js" type="text/javascript"></script>
+<script src="~/Scripts/slick/slick.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+    $(document).on('ready', function() {
+        $(".myslider").slick({
+        infinite: true,
+        slidesToShow: 4,
+        slidesToScroll: 4,
+            autoplay: true
+      });      
+    });
+</script>

@@ -1601,8 +1601,10 @@ body {
 .detailscol .detailsright { float:left; width:300px}
 .img_detail
 {
-    height:200px;
-    width:300px;
+    max-height:300px;
+    max-width:300px;
+    min-height:250px;
+    min-width:250px;
     object-fit:contain;
 }
 .login_button{
