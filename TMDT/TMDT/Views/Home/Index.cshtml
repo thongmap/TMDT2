@@ -43,20 +43,31 @@
             <div class="heading">
                 <h3>@itemCat.CategoryName</h3>
             </div>
-            <div class="see">
-                <p><a href="/Home/Category/@itemCat.CategoryID">Xem tất cả</a></p>
-            </div>
+            @foreach (Hierarchary kim in ViewBag.Hier)
+            {
+                if (kim.CategoryID == itemCat.CategoryID)
+                {
+                    <div style="width:15%">
+                        <a href="/Home/Category/@kim.id">@kim.Name</a>
+                    </div>
+                }
+            }
+          
             <div class="clear"></div>
         </div>
         <div class="section group">
-            @foreach (Product item in Model.Where(x => x.CategoryID == itemCat.CategoryID).Take(4))
-            {
+            @{int i = 0;
+            }
+            @foreach (Hierarchary xem in ViewBag.Hier)
+                        { 
+                            foreach (Product item in Model.Where(x => x.CategoryID == xem.id && xem.CategoryID == itemCat.CategoryID))
+                            {
                 <div class="grid_1_of_4 images_1_of_4">
                     <a href="@Url.Action("Details", "Home", new { id = item.ProductID })">
                         @{
-                string parameterValue = item.Image.ToString().Substring(0, item.Image.IndexOf("|"));
-                        }
-                        <img src="@Url.Content("/public/MyImages/" + Html.DisplayFor(modelitem=>parameterValue))" />
+                            string parameterValue = item.Image.ToString().Substring(0, item.Image.IndexOf("|"));
+                }
+                        <img src="@Url.Content("/public/MyImages/" + Html.DisplayFor(modelitem => parameterValue))" />
                     </a>
                     <h2>@Html.DisplayFor(modelitem => item.ProductName)</h2>
                     <div class="price-details">
@@ -68,11 +79,20 @@
                         </div>
                     </div>
                 </div>
-            }
+                                    i++;
+                                    if (i == 4)
+                                    {
+                                        break;
+                                    }
+                                }
+                                if (i == 4)
+                                {
+                                    break;
+                                }
+                            }
         </div>
     }
 </div>
-<script src="~/Scripts/jquery-1.10.2.intellisense.js" type="text/javascript"></script>
 <script src="~/Scripts/slick/slick.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
     $(document).on('ready', function() {
@@ -80,7 +100,7 @@
         infinite: true,
         slidesToShow: 4,
         slidesToScroll: 4,
-            autoplay: true
+        autoplay: true
       });      
     });
 </script>

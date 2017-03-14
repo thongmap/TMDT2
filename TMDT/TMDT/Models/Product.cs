@@ -58,7 +58,7 @@
 
         public virtual Account Account { get; set; }
 
-        public virtual Category Category { get; set; }
+        public virtual Hierarchary Category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<cartitem> cartitems { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

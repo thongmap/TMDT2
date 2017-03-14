@@ -5,7 +5,17 @@
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@{ 
+    if (ViewBag.Same == null)
+    {
+        <span>fihùiewìuhưihfưhu</span>}
+}
+<style>
+    .sliderthumb.slick-initialized.slick-slider button.slick-prev:before,
+    .sliderthumb.slick-initialized.slick-slider button.slick-next:before {
+        color: black;
+    }
+</style>
 <div class="content">
     <div class="content_top">
         <div class="heading">
@@ -20,7 +30,7 @@
                 <img id="img_01" src="~/public/MyImages/@(Model.Image.Substring(0,Model.Image.IndexOf("|")))" class="img_detail" />
             </div>
            
-            <div id="gallery_01" >
+            <div id="gallery_01" class="sliderthumb" style="width:45%" >
               
                     @{ string temp = Model.Image;
                         for (int i = 0; i < 8; i++)
@@ -28,12 +38,12 @@
                             if (temp.IndexOf("|") < 0) { break; }
                             if (i == 4)
                             {
-                    <br /> }
-                           
+                    }
+                            <div>
                                 <a href="#" data-image="/public/MyImages/@(temp.Substring(0, temp.IndexOf("|")))">
                                     <img id="img_01" src="~/public/MyImages/@(temp.Substring(0, temp.IndexOf("|")))" width="50px" height="50px" />
                                 </a>
-                           
+                            </div>
                             temp = temp.Substring(temp.IndexOf("|") + 1);
                         }
                     }
@@ -58,7 +68,7 @@
                 </dd>
                 <dt>Loại sản phẩm</dt>
                 <dd>
-                    @Html.DisplayFor(model => model.Category.CategoryName)
+                    @Html.DisplayFor(model => model.Category.Name)
                 </dd>
 
                 <dt>
@@ -108,7 +118,53 @@
         <div class="clear"></div>
     </div>
     <div class="section group">
-        @Html.DisplayFor(model => model.Info)
+        <div class="text-center" style="padding:2.5%">
+            @Html.DisplayFor(model => model.Info)
+        </div>
     </div>
-</div>
+    <div class="content_top">
+        <div class="heading">
+            <h3>Các sản phẩm cùng loại</h3>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="section group">
+        <div class="myslider">
+            @foreach (Product item in ViewBag.Same)
+            {
+                <div>
+                    <div class="grid_1_of_4 images_1_of_4" style="width:96%;height:100%;padding:7%">
+                        <a href="@Url.Action("Details","Home", new { id=item.ProductID})">@{
+                            string parameterValue = item.Image.ToString().Substring(0, item.Image.IndexOf("|"));
+                        }
+                        <img src="@Url.Content("/public/MyImages/" + Html.DisplayFor(modelitem=>parameterValue))" /></a>
+                        <h2>@Html.DisplayFor(modelitem => item.ProductName)</h2>
+                        <div class="price-details">
+                            <div class="add-cart">
+                                <h4> @Html.ActionLink("Thêm vào giỏ", "AddToCart", "CartItem", new { id = item.ProductID }, "")</h4>
+                            </div>
+                            <div class="price-number">
+                                <p><span class="rupees">@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
 
+</div>
+<script src="~/Scripts/slick/slick.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+    $(document).on('ready', function() {
+        $(".sliderthumb").slick({
+        infinite: true,
+        slidesToShow: 4,
+        slidesToScroll: 4
+        });
+        $(".myslider").slick({
+            slidesToShow: 4,
+            slidesToScroll: 4
+        })
+    });
+</script>

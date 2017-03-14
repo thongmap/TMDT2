@@ -27,6 +27,8 @@
     @Scripts.Render("~/bundles/modernizr")
     <link rel="stylesheet" type="text/css" href="~/Scripts/slick/slick.css">
     <link rel="stylesheet" type="text/css" href="~/Scripts/slick/slick-theme.css">
+ 
+    <script src="~/Scripts/slideshow.js"></script>
 </head>
 <body>
     <div class="wrap">
@@ -115,9 +117,14 @@
                 <div class="logo">
                     <a href="/Home/Index"><img src="~/public/images/nenlogo.png" alt="" /></a>
                 </div>
-                <div class="cart">
+                <div class="logo">
+                    <a href="/Home/Index"><img src="~/public/images/marvel-vs-dc-banner.png" alt="" /></a>
+                </div>
+                <div class="logo">
+                    <a href="/Home/Index"><img src="~/public/images/nenlogo.png" alt="" /></a>
                 </div>
             </div>
+           
             <div class="header_bottom">
                 @{Html.RenderAction("Menu", "Home");}
                 <div class="search_box">
@@ -162,5 +169,14 @@
     </div>
     <a href="#" id="toTop"><span id="toTopHover"> </span></a>
     @{Html.RenderAction("GetData", "Home");}
+    <script src="~/Scripts/slick/slick.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+    $(document).on('ready', function() {
+        $(".header_top").slick({
+        infinite: true,
+        autoplay: true,
+      });
+    });
+    </script>
 </body>
 </html>

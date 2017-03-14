@@ -23,6 +23,7 @@ namespace TMDT.Controllers
         {
             ViewBag.New = new ProductDAO().ListNewProduct(12);
             ViewBag.Category = new ProductDAO().ListAllCat();
+            ViewBag.Hier = new HierDAO().ListAll();
             return View(new ProductDAO().ListAll());
         }
         public ActionResult GetData()
@@ -36,6 +37,9 @@ namespace TMDT.Controllers
         public ActionResult Details(int id)
         {
             TMDTModel db = new TMDTModel();
+            int? idCat = db.Products.Find(id).CategoryID;
+            List<Product> Lis = db.Products.Where(s => s.CategoryID==idCat).ToList();
+            ViewBag.Same = Lis;
             return View(db.Products.Find(id));
         }
 
@@ -300,7 +304,8 @@ namespace TMDT.Controllers
         [ChildActionOnly]
         public ActionResult Menu()
         {
-            var model = new CategoryDAO().ListAll();
+            var model = new HierDAO().ListAll();
+            ViewBag.Category = new CategoryDAO().ListAll();
             return PartialView(model);
         }
 

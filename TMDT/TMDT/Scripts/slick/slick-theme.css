@@ -1,4 +1,4 @@
-@charset 'UTF-8';
+﻿@charset 'UTF-8';
 /* Slider */
 .slick-loading .slick-list
 {
@@ -123,9 +123,10 @@
 {
     position: absolute;
     bottom: -25px;
-
+     top: 50px; 
+  
     display: block;
-
+    background: transparent;
     width: 100%;
     padding: 0;
     margin: 0;
@@ -192,7 +193,7 @@
     text-align: center;
 
     opacity: .25;
-    color: black;
+    color: white;
 
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -200,5 +201,5 @@
 .slick-dots li.slick-active button:before
 {
     opacity: .75;
-    color: black;
+    color: white;
 }

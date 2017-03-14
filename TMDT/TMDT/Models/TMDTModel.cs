@@ -22,6 +22,7 @@ namespace TMDT
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<cartitem> ShoppingCartItems { get; set; }
         public virtual DbSet<VoteModel> VoteModels { get; set; }
+        public virtual DbSet<Hierarchary> Hierarcharys { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Bill>()
