@@ -87,8 +87,12 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Web.Abstractions" />
-    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Web.Abstractions">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Routing">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
@@ -156,6 +160,7 @@
     <Compile Include="DAO\HierDAO.cs" />
     <Compile Include="DAO\OrderDAO.cs" />
     <Compile Include="DAO\ProductDAO.cs" />
+    <Compile Include="Logic\Nganluong.cs" />
     <Compile Include="Logic\ShoppingcartAction.cs" />
     <Compile Include="Logic\ShoppingCartRemoveViewModel.cs" />
     <Compile Include="Logic\ShoppingCartViewModel.cs" />
@@ -375,6 +380,7 @@
     <Content Include="Scripts\slick\slick-theme.scss" />
     <Content Include="Scripts\slick\slick.less" />
     <Content Include="Scripts\slick\slick.scss" />
+    <Content Include="Views\CartItem\OnlinePay.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -153,15 +153,14 @@ namespace TMDT.Controllers
 
         [HttpGet]
         public ActionResult Payment()
-        {           
-            if(Session["User"]==null)
+        {
+            var cart = ShoppingCart.GetCart(this.HttpContext, "");
+            Account user = new Account();
+            if (Session["User"] != null)
             {
-                TempData["Message"] = "Vui lòng đăng nhập để thực hiện thanh toán";
-                return RedirectToAction("Login", "Home");
+                user = Session["User"] as Account;
+                cart = ShoppingCart.GetCart(this.HttpContext, user.UserName);
             }
-            Account user = Session["User"] as Account;    
-            var cart = ShoppingCart.GetCart(this.HttpContext,user.UserName);
-
             var viewModel = new ShoppingCartViewModel
             {
                 CartItems = cart.GetCartItems(),
@@ -170,15 +169,36 @@ namespace TMDT.Controllers
             if(viewModel.CartItems.Count==0)
                 return RedirectToAction("Index", "Home");
             ViewBag.Item = viewModel.CartItems;
-            Bill bill = new Bill()
+            string s = "";
+            foreach (cartitem item in viewModel.CartItems)
+                s += item.Product.ProductName + "|";
+            Bill bill = new Bill();
+            if (user != null)
             {
-                AccountID = user.AccountID,
-                ShipName = user.UserName,
-                ShipMobile = user.Phone,
-                ShipAddress = user.Address,
-                ShipEmail = user.Email,
-                SumMoney = viewModel.CartTotal
-            };
+                bill = new Bill()
+                {
+                    AccountID = user.AccountID,
+                    ShipName = user.UserName,
+                    ShipMobile = user.Phone,
+                    ShipAddress = user.Address,
+                    ShipEmail = user.Email,
+                    SumMoney = viewModel.CartTotal
+                };
+            }
+            else
+            {
+                Random rnd = new Random();
+                bill = new Bill()
+                {
+                    AccountID = rnd.Next(),
+                    ShipName = "",
+                    ShipMobile = "",
+                    ShipAddress = "",
+                    ShipEmail = "",
+                    SumMoney = viewModel.CartTotal
+                };
+            }
+            ViewBag.Name = s;
             return View(bill);
         }
 
@@ -190,7 +210,11 @@ namespace TMDT.Controllers
                 bill.CreatedDate = DateTime.Now;
                 bill.Status = "Chưa hoàn tất";
                 var user = Session["User"] as TMDT.Account;
-                var cart = ShoppingCart.GetCart(this.HttpContext, user.UserName);
+                var cart = ShoppingCart.GetCart(this.HttpContext,"");
+                if (user != null)
+                {
+                    cart = ShoppingCart.GetCart(this.HttpContext, user.UserName);
+                }
                 foreach (var item in cart.GetCartItems())
                 {
                     bill.DetailBills.Add(new TMDT.DetailBill()
@@ -201,7 +225,7 @@ namespace TMDT.Controllers
                         Price = item.Product.Price
                     });
                 }
-                ShoppingCart.GetCart(this.HttpContext, user.UserName).EmptyCart();
+                cart.EmptyCart();
                 Session.Remove("CartCount");
 
                 new BillDAO().Insert(bill);
@@ -210,7 +234,12 @@ namespace TMDT.Controllers
             }
             return View();
         }
-
+        [HttpGet]
+        public ActionResult OnlinePay(string procname,string buyerinfo)
+        {
+            Response.Redirect("http://sandbox.nganluong.vn:8088/nl30/button_payment.php?receiver=thongmap1995@yahoo.com&product_name=@(ViewBag.Name)&price=@(Model.SumMoney*100)&return_url=http://localhost:3133/CartItem/OnlinePay&comments=nidnfwuiew");
+            return View();
+        }
         [HttpGet]
         public ActionResult Order(int? index, int?  limitTime, int? status)
         {

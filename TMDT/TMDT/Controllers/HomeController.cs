@@ -29,8 +29,8 @@ namespace TMDT.Controllers
         public ActionResult GetData()
         {
             TMDTModel db = new TMDTModel();
-            var ListCategory = db.Categories.ToList();
-            SelectList list = new SelectList(ListCategory, "CategoryID", "CategoryName");
+            var ListCategory = new HierDAO().ListAll();
+            SelectList list = new SelectList(ListCategory, "id", "Name");
             ViewBag.CategoryList = list;
             return PartialView(ViewBag.CategoryList);
         }
@@ -317,6 +317,7 @@ namespace TMDT.Controllers
                 int i = item.Image.IndexOf("|");
                 item.Image = item.Image.Substring(0, i);
             }
+            ViewBag.CatName = new HierDAO().HierName(id);
             return View(model);
         }
 

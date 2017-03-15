@@ -58,51 +58,57 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div>
-                       <br />
-                    @using (Html.BeginForm("Payment", "CartItem", FormMethod.Post, new { id = "form2" }))
-                    {
-                        <div id="div1" class="form-horizontal">
-                            @Html.ValidationSummary(true)
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.ShipName, htmlAttributes: new { @class = "control-label col-md-3" })
-                                <div class="col-md-7">
-                                    @Html.TextBoxFor(model => model.ShipName, "", new { @class = "form-control", @id = "rename" })
-                                    @Html.ValidationMessageFor(model => model.ShipName, "", new { @class = "text-danger" })
+                        <br />
+                        @using (Html.BeginForm("Payment", "CartItem", FormMethod.Post, new { id = "form2" }))
+                        {
+                            <div id="div1" class="form-horizontal">
+                                @Html.ValidationSummary(true)
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ShipName, htmlAttributes: new { @class = "control-label col-md-3" })
+                                    <div class="col-md-7">
+                                        @Html.TextBoxFor(model => model.ShipName, "", new { @class = "form-control", @id = "rename" })
+                                        @Html.ValidationMessageFor(model => model.ShipName, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ShipMobile, htmlAttributes: new { @class = "control-label col-md-3" })
+                                    <div class="col-md-7">
+                                        @Html.TextBoxFor(model => model.ShipMobile, "", new { @class = "form-control", @id = "mobile" })
+                                        @Html.ValidationMessageFor(model => model.ShipMobile, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ShipAddress, htmlAttributes: new { @class = "control-label col-md-3" })
+                                    <div class="col-md-7">
+                                        @Html.TextBoxFor(model => model.ShipAddress, "", new { @class = "form-control", @id = "address" })
+                                        @Html.ValidationMessageFor(model => model.ShipAddress, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ShipEmail, htmlAttributes: new { @class = "control-label col-md-3" })
+                                    <div class="col-md-7">
+                                        @Html.TextBoxFor(model => model.ShipEmail, "", new { @class = "form-control", @id = "email" })
+                                        @Html.ValidationMessageFor(model => model.ShipEmail, "", new { @class = "text-danger" })
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.ShipMobile, htmlAttributes: new { @class = "control-label col-md-3" })
-                                <div class="col-md-7">
-                                    @Html.TextBoxFor(model => model.ShipMobile, "", new { @class = "form-control", @id = "mobile" })
-                                    @Html.ValidationMessageFor(model => model.ShipMobile, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.ShipAddress, htmlAttributes: new { @class = "control-label col-md-3" })
-                                <div class="col-md-7">
-                                    @Html.TextBoxFor(model => model.ShipAddress, "", new { @class = "form-control", @id = "address" })
-                                    @Html.ValidationMessageFor(model => model.ShipAddress,"",new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.ShipEmail, htmlAttributes: new { @class = "control-label col-md-3" })
-                                <div class="col-md-7">
-                                    @Html.TextBoxFor(model => model.ShipEmail, "", new { @class = "form-control", @id = "email" })
-                                    @Html.ValidationMessageFor(model => model.ShipEmail, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                        </div>
-                        @Html.HiddenFor(model => model.AccountID)
-                        @Html.HiddenFor(model => model.SumMoney)
+                            @Html.HiddenFor(model => model.AccountID)
+                            @Html.HiddenFor(model => model.SumMoney)
 
-                    <div class="form-group">
-                        <div class="col-md-offset-3 col-md-10">
-                            <input type="submit" value="Đặt hàng" class="btn btn-default" onclick="Submit();" />
-                        </div>
+                            <div class="form-group">
+                                <div class="col-md-5">
+                                    <input type="submit" value="Thanh toán khi nhận hàng" class="btn btn-default" onclick="Submit();" />
+                                </div>
+                                <div class="col-md-5">
+                                    <input type="button" value="Thanhh toán trực tuyến" class="btn btn-default" onclick="location.href = 'http://sandbox.nganluong.vn:8088/nl30/button_payment.php?receiver=thongmap1995@yahoo.com&product_name=@(ViewBag.Name)&price=@(Model.SumMoney*100)&return_url=http://localhost:3133/CartItem/Payment/@(Model)'" />
+</div>
+
+
+</div>
+
+                        }
                     </div>
-                    }
-               </div>
-                    </div>
+                </div>
                 <div class="col-lg-5">
                     <br />
                     <div class="table-responsive">
@@ -130,13 +136,16 @@
                                     <td></td>
                                     <td style="font-weight:bolder;font-size:larger;">Thành tiền</td>
 
-                                    <td style="font-weight:bolder;font-size:larger;color:red;">@if (Model != null)
-                                    {@Model.SumMoney}</td>
+                                    <td style="font-weight:bolder;font-size:larger;color:red;">
+                                        @if (Model != null)
+                                        {@Model.SumMoney}
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>

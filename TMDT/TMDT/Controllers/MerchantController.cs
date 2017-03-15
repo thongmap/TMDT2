@@ -75,7 +75,7 @@ namespace TMDT.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
-            ViewBag.Categories = new CategoryDAO().DropdownCategory();
+            ViewBag.Categories = new HierDAO().DropdownCategory();
             return View();
         }
 
