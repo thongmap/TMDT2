@@ -30,9 +30,9 @@ namespace TMDT.Controllers
         {
             TMDTModel db = new TMDTModel();
             var ListCategory = new HierDAO().ListAll();
-            SelectList list = new SelectList(ListCategory, "id", "Name");
-            ViewBag.CategoryList = list;
-            return PartialView(ViewBag.CategoryList);
+            ViewBag.Catlist = new CategoryDAO().ListAll();
+            ViewBag.HierList = ListCategory;
+            return PartialView();
         }
         public ActionResult Details(int id)
         {

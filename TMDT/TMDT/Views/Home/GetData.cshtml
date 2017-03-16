@@ -29,7 +29,22 @@
                         </div>
                         <div class="form-group"><span class="control-label col-md-4">Loại:</span>
                             <div class="col-md-8"> 
-                                @Html.DropDownList("category", ViewBag.CategoryList as SelectList, "Chọn loại",new { @class = "form-control" })
+                                @*@Html.DropDownList("category", ViewBag.CategoryList as SelectList, "Chọn loại",new { @class = "form-control" })*@
+                                <select class="form-control" id="category" name="category">
+                                    <option>Chọn loại</option>
+                                    @foreach (Category cat in ViewBag.Catlist)
+                                    {
+                                    <optgroup label="@cat.CategoryName">
+                                        @foreach (Hierarchary item in ViewBag.HierList)
+                                        {
+                                            if(item.CategoryID == cat.CategoryID)
+                                            {
+                                                <option value="@item.id">@item.Name</option> 
+                                            }
+                                        }
+                                    </optgroup>
+                                    }
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">

@@ -232,12 +232,23 @@ namespace TMDT.Controllers
 
                 return RedirectToAction("Order");
             }
-            return View();
+            return View(bill);
         }
         [HttpGet]
-        public ActionResult OnlinePay(string procname,string buyerinfo)
+        public ActionResult OnlinePay(string buyerinfo)
         {
-            Response.Redirect("http://sandbox.nganluong.vn:8088/nl30/button_payment.php?receiver=thongmap1995@yahoo.com&product_name=@(ViewBag.Name)&price=@(Model.SumMoney*100)&return_url=http://localhost:3133/CartItem/OnlinePay&comments=nidnfwuiew");
+            Bill bill = new Bill();
+            string[] info = buyerinfo.Split(new Char[] { '|' });
+            ViewBag.info = info;
+            return View();
+            //Thread.Sleep(5000);
+            //return RedirectToAction("Payment", "CartItem", bill);
+        }
+        public ActionResult OnlinePayment(string info)
+        {
+           
+            Response.Redirect("http://sandbox.nganluong.vn:8088/nl30/button_payment.php?receiver=thongmap1995@yahoo.com&product_name=55555&price=3000&return_url=http://localhost:3133/CartItem/OnlinePay?buyerinfo=" + info + "&comments=thongiòiẻuheui");
+            
             return View();
         }
         [HttpGet]
