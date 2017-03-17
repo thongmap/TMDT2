@@ -31,7 +31,7 @@
                       <td>@i</td>
                       <td><img src="@Url.Content("/public/MyImages/" + Html.DisplayFor(modelitem => item.Image))" width="50px" height="50px" /></td>
                       <td>@Html.DisplayFor(modelitem => item.ProductName)</td>
-                      <td>@Html.DisplayFor(modelitem => item.Category.CategoryName)</td>
+                      <td>@Html.DisplayFor(modelitem => item.Category.Name)</td>
                       <td>@Html.DisplayFor(modelitem => item.Price)</td>
                       <td>@Html.DisplayFor(modelitem => item.Quantity)</td>
                       <td>@Html.ActionLink("Xem Chi tiết", "ProductInfo", "Merchant", new { id = item.ProductID }, "")</td>

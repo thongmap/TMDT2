@@ -262,12 +262,13 @@ namespace TMDT.Controllers
                     Price = item.Product.Price
                 });
             }
+
             cart.EmptyCart();
             Session.Remove("CartCount");
 
             new BillDAO().Insert(bill);
-
-            return RedirectToAction("Order");
+            ViewBag.Detail = new BillDAO().GetDetailBill_BillID(bill.BillID);
+            return View(bill);
         }
         public ActionResult OnlinePayment(string info,string name)
         {

@@ -164,6 +164,11 @@ namespace TMDT.DAO
             }
             return model;
         }
+        public Bill GetBill_BillID(int id)
+        {
+            var model = db.Bills.Where(x => x.BillID == id).SingleOrDefault();
+            return model;
+        }
 
         public void ChangeStatus(int billid)
         {
