@@ -239,15 +239,40 @@ namespace TMDT.Controllers
         {
             Bill bill = new Bill();
             string[] info = buyerinfo.Split(new Char[] { '|' });
-            ViewBag.info = info;
-            return View();
-            //Thread.Sleep(5000);
-            //return RedirectToAction("Payment", "CartItem", bill);
+            bill.ShipName = info[0];
+            bill.ShipMobile = info[1];
+            bill.ShipAddress = info[2];
+            bill.ShipEmail = info[3];
+            bill.SumMoney = Decimal.Parse(info[4]);
+            bill.CreatedDate = DateTime.Now;
+            bill.Status = "Chưa hoàn tất";
+            var user = Session["User"] as TMDT.Account;
+            var cart = ShoppingCart.GetCart(this.HttpContext, "");
+            if (user != null)
+            {
+                cart = ShoppingCart.GetCart(this.HttpContext, user.UserName);
+            }
+            foreach (var item in cart.GetCartItems())
+            {
+                bill.DetailBills.Add(new TMDT.DetailBill()
+                {
+                    AccountID = item.Product.AccountID,
+                    ProductID = item.ProductID,
+                    Quantity = item.Quantity,
+                    Price = item.Product.Price
+                });
+            }
+            cart.EmptyCart();
+            Session.Remove("CartCount");
+
+            new BillDAO().Insert(bill);
+
+            return RedirectToAction("Order");
         }
-        public ActionResult OnlinePayment(string info)
+        public ActionResult OnlinePayment(string info,string name)
         {
            
-            Response.Redirect("http://sandbox.nganluong.vn:8088/nl30/button_payment.php?receiver=thongmap1995@yahoo.com&product_name=55555&price=3000&return_url=http://localhost:3133/CartItem/OnlinePay?buyerinfo=" + info + "&comments=thongiòiẻuheui");
+            Response.Redirect("http://sandbox.nganluong.vn:8088/nl30/button_payment.php?receiver=thongmap1995@yahoo.com&product_name="+name+"&price=3000&return_url=http://localhost:3133/CartItem/OnlinePay?buyerinfo=" + info + "&comments=thongiòiẻuheui");
             
             return View();
         }

@@ -22,7 +22,7 @@
                         {
                             if (mail!= "" && mailreg.test(mail))
                             {
-                                location.href = '@Url.Action("OnlinePayment","Cartitem")?info=' + name + '|'+mobile+'|'+addss+'|'+mail;
+                                location.href = '@Url.Action("OnlinePayment","Cartitem")?info=' + name + '|' + mobile + '|' + addss + '|' + mail + '|@Model.SumMoney&name=@ViewBag.Name';
                             }
                             else
                             {
