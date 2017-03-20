@@ -251,6 +251,7 @@ namespace TMDT.Controllers
             if (user != null)
             {
                 cart = ShoppingCart.GetCart(this.HttpContext, user.UserName);
+                bill.AccountID = user.AccountID;
             }
             foreach (var item in cart.GetCartItems())
             {

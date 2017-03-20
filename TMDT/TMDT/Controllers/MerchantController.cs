@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using TMDT.DAO;
 using TMDT.Models;
@@ -48,6 +49,8 @@ namespace TMDT.Controllers
             if (user != null)
             {
                 var model = new ProductDAO().ListSold(user.AccountID);
+                if (model == null)
+                    ViewBag.Mess = "Bạn chưa bán được sản phẩm nào";
                 return View(model);
             }
             return RedirectToAction("Login", "Home");
@@ -165,6 +168,9 @@ namespace TMDT.Controllers
                     _fileName = user.UserName + "_" + pic + ".jpg";
                     var path = Path.Combine(Server.MapPath("~/public/MyImages/"), _fileName);
                     item.SaveAs(path);
+                    WebImage img = new WebImage(item.InputStream);
+                    img.Resize(1500, 1500);
+                    img.Save(path);
                     listImages += _fileName + "|";
                 }
                 model.Image = listImages;

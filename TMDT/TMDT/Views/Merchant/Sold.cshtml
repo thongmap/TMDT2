@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable <TMDT.Product>
 @{
     ViewBag.Title = "Sold";
     Layout = "~/Views/Shared/_LayoutMerchant.cshtml";
@@ -12,6 +12,10 @@
         <div class="clear"></div>
     </div>
     <div class="section group">
+        @if (ViewBag.Mess != null)
+        {
+            @ViewBag.Mess
+        }
         <table class="table table-default table-striped table-bordered">
             <thead>
             <th>STT</th>
@@ -28,9 +32,12 @@
                 {
                     <tr>
                         <td>@i</td>
-                        <td><img src="@Url.Content("/public/MyImages/" + Html.DisplayFor(modelitem => item.Image))" width="50px" height="50px" /></td>
+                        <td>@{
+                            string parameterValue = item.Image.ToString().Substring(0, item.Image.IndexOf("|"));
+                        }
+                        <img src="@Url.Content("/public/MyImages/" + Html.DisplayFor(modelitem => parameterValue))" width="50px" height="50px" /></td>
                         <td>@Html.DisplayFor(modelitem => item.ProductName)</td>
-                        <td>@Html.DisplayFor(modelitem => item.Category.CategoryName)</td>
+                        <td>@Html.DisplayFor(modelitem => item.Category.Name)</td>
                         <td>@Html.DisplayFor(modelitem => item.Price)</td>
                         <td>@Html.DisplayFor(modelitem => item.Quantity)</td>
                         <td>@Html.ActionLink("Xem Chi tiết", "ProductInfo", "Merchant", new { id = item.ProductID }, "")</td>

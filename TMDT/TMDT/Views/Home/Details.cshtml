@@ -51,11 +51,11 @@
             </div>
         </div>
         <div class="col-md-6">
+            <h3 class="text-center">THÔNG TIN SẢN PHẨM</h3>
             <dl class="dl-horizontal">
                 <dt>
                     <label>Người bán</label>
                 </dt>
-
                 <dd>
                     @Html.DisplayFor(model => model.Account.UserName)
                 </dd>
@@ -80,7 +80,17 @@
                     @Html.DisplayNameFor(model => model.Price)
                 </dt>
                 <dd style="color:red;font-weight:bold">
-                    @Html.DisplayFor(model => model.Price)
+                    @if (Model.Discount <= 0)
+                    {
+                         @:$@Html.DisplayFor(model => model.Price)
+                            }
+                    else
+                    {
+                        <del style="color:black">$@Html.DisplayFor(model => model.Price)</del>
+                        int price = int.Parse(Model.Price.ToString()) * Model.Discount / 100;
+                        @:$@price
+                        Html.DisplayFor(model => model.Discount);
+                    }
                 </dd>
                 <dt>
                     @Html.DisplayNameFor(model => model.CreatedDate)
@@ -110,17 +120,6 @@
     </script>
     
     <br />
-    <div class="content_top">
-        <div class="heading">
-            <h3>@Html.DisplayNameFor(model => model.Info)</h3>
-        </div>
-        <div class="clear"></div>
-    </div>
-    <div class="section group">
-        <div class="text-center" style="padding:2.5%">
-            @Html.DisplayFor(model => model.Info)
-        </div>
-    </div>
     <div class="content_top">
         <div class="heading">
             <h3>Các sản phẩm cùng loại</h3>
@@ -167,3 +166,4 @@
         })
     });
 </script>
+<div class="fb-comments" data-href="http://localhost:3133/Home/Detail/@Model.ProductID" data-numposts="5"></div>

@@ -55,7 +55,7 @@
         [Display(Name = "Ngày tạo")]
         [DisplayFormat(DataFormatString = "{0:dd/mm/yyyy}")]
         public DateTime? CreatedDate { get; set; }
-
+        public int Discount { get; set; }
         public virtual Account Account { get; set; }
 
         public virtual Hierarchary Category { get; set; }
