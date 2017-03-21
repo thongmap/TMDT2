@@ -13,12 +13,71 @@ using System.Diagnostics;
 using TMDT.Logic;
 using System.Net.Mail;
 using System.Web.Mail;
+using Facebook;
+using System.Web.Security;
 
 namespace TMDT.Controllers
 {
     public class HomeController : Controller
     {
+        private Uri RedirectUri
+        {
+            get
+            {
+                var uriBuilder = new UriBuilder(Request.Url);
+                uriBuilder.Query = null;
+                uriBuilder.Fragment = null;
+                uriBuilder.Path = Url.Action("FacebookCallback");
+                return uriBuilder.Uri;
+            }
+        }
+        [AllowAnonymous]
+        public ActionResult Facebook()
+        {
+            var fb = new FacebookClient();
+            var loginUrl = fb.GetLoginUrl(new
+            {
+                client_id = "444195149059600",
+                client_secret = "89223ca2d87cc4a741000d5c1ea57694",
+                redirect_uri = RedirectUri.AbsoluteUri,
+                response_type = "code",
+                scope = "email" // Add other permissions as needed
+            });
 
+            return Redirect(loginUrl.AbsoluteUri);
+        }
+
+        public ActionResult FacebookCallback(string code)
+        {
+            var fb = new FacebookClient();
+            dynamic result = fb.Post("oauth/access_token", new
+            {
+                client_id = "444195149059600",
+                client_secret = "89223ca2d87cc4a741000d5c1ea57694",
+                redirect_uri = RedirectUri.AbsoluteUri,
+                code = code
+            });
+
+            var accessToken = result.access_token;
+
+            // Store the access token in the session for farther use
+            Session["AccessToken"] = accessToken;
+
+            // update the facebook client with the access token so 
+            // we can make requests on behalf of the user
+            fb.AccessToken = accessToken;
+
+            // Get the user's information
+            dynamic me = fb.Get("me?fields=first_name,middle_name,last_name,id,email");
+            string email = me.email;
+            string firstname = me.first_name;
+            string middlename = me.middle_name;
+            string lastname = me.last_name;
+
+            // Set the auth cookie
+            FormsAuthentication.SetAuthCookie(email, false);
+            return RedirectToAction("Index", "Home");
+        }
         public ActionResult Index()
         {
             ViewBag.New = new ProductDAO().ListNewProduct(12);
@@ -38,7 +97,7 @@ namespace TMDT.Controllers
         {
             TMDTModel db = new TMDTModel();
             int? idCat = db.Products.Find(id).CategoryID;
-            List<Product> Lis = db.Products.Where(s => s.CategoryID==idCat).ToList();
+            List<Product> Lis = db.Products.Where(s => s.CategoryID == idCat).ToList();
             ViewBag.Same = Lis;
             return View(db.Products.Find(id));
         }
@@ -135,7 +194,7 @@ namespace TMDT.Controllers
                     if (user.Status == "true")
                     {
                         Session["User"] = user;
-                        string notice="";
+                        string notice = "";
                         DaysLeft daysleft = dao.CountDayLeft(user.AccountID);
                         Session["DaysLeft"] = daysleft;
                         var cart = ShoppingCart.GetCart(this.HttpContext, null);
@@ -143,14 +202,14 @@ namespace TMDT.Controllers
                         cart.MigrateCart(username);
                         Session.Remove("CartID");
                         if (!String.IsNullOrEmpty(notice))
-                            TempData["notice"] = "Bạn không thể mua các sản phẩm: "+ notice+" vì bạn bán chúng";
+                            TempData["notice"] = "Bạn không thể mua các sản phẩm: " + notice + " vì bạn bán chúng";
                         Session["CartCount"] = ShoppingCart.GetCart(this.HttpContext, username).GetCount();
                         if (cart.GetCount() > 0)
-                                      return RedirectToAction("Index", "CartItem");
+                            return RedirectToAction("Index", "CartItem");
                         return RedirectToAction("Index");
                     }
                     else
-                        ViewBag.Message = "Xin lỗi tài khoản của bạn đã bị khóa. Vì lý do: "+user.LockNote+". Nếu có thắc mắc, vui lòng liên hệ 11-22-33-44.";
+                        ViewBag.Message = "Xin lỗi tài khoản của bạn đã bị khóa. Vì lý do: " + user.LockNote + ". Nếu có thắc mắc, vui lòng liên hệ 11-22-33-44.";
                 }
                 else
                     ViewBag.Message = "Tài khoản hoặc mật khẩu không đúng. Vui lòng đăng nhập lại!";
@@ -231,7 +290,7 @@ namespace TMDT.Controllers
 
                         EmailService service = new EmailService();
                         bool kq = service.Send(smtpUserName, smtpPassword, smtpHost, smtpPort,
-                            emailTo, subject, body,path);
+                            emailTo, subject, body, path);
                         model = new Account();
                         return RedirectToAction("Confirm", "Home", new { Email = user.Email });
                     }
@@ -351,7 +410,7 @@ namespace TMDT.Controllers
                     {
                         try
                         {
-                            sch.Rating = (double)(thisVote + sch.Rating*sch.NoRating) / (double)(sch.NoRating + 1);
+                            sch.Rating = (double)(thisVote + sch.Rating * sch.NoRating) / (double)(sch.NoRating + 1);
                             sch.NoRating += 1;
                             db.Entry(sch).State = EntityState.Modified;
                             db.SaveChanges();
@@ -426,7 +485,7 @@ namespace TMDT.Controllers
             else
             {
                 TempData["Message"] = "Cập nhật thất bại. Vui lòng nhập lại.";
-                return RedirectToAction("ChangeInfo","Home", new { id = acc.AccountID });
+                return RedirectToAction("ChangeInfo", "Home", new { id = acc.AccountID });
             }
 
         }
@@ -446,8 +505,8 @@ namespace TMDT.Controllers
         [HttpPost]
         public ActionResult ChangePass(string userid, string pass, string pass3)
         {
-            var dao=new AccountDAO();
-            if(dao.CheckPass(Int16.Parse(userid),Encryptor.MD5Hash(pass3)))
+            var dao = new AccountDAO();
+            if (dao.CheckPass(Int16.Parse(userid), Encryptor.MD5Hash(pass3)))
             {
                 dao.ChangePass(Encryptor.MD5Hash(pass), Int16.Parse(userid));
                 TempData["Message"] = "Cập nhật mật khẩu thành công.";
@@ -458,7 +517,7 @@ namespace TMDT.Controllers
                 TempData["Message"] = "Mật khẩu cũ không đúng. Vui lòng nhập lại";
                 return RedirectToAction("ChangePass", new { id = Int16.Parse(userid) });
             }
-            
+
         }
     }
 }
