@@ -224,10 +224,12 @@
     <Content Include="public\font-awesome\css\font-awesome.min.css" />
     <Content Include="public\font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="public\font\glyphicons-halflings-regular.svg" />
+    <Content Include="public\images\area_ism_banner.png" />
     <Content Include="public\images\arrow-next.png" />
     <Content Include="public\images\arrow-prev.png" />
     <Content Include="public\images\arrow_up.png" />
     <Content Include="public\images\compare.png" />
+    <Content Include="public\images\dc_universe_online_dock_icon_by_mrforknspoon-d4hsp0g.png" />
     <Content Include="public\images\dribbble.png" />
     <Content Include="public\images\drop_arrow-hover.png" />
     <Content Include="public\images\drop_arrow.png" />

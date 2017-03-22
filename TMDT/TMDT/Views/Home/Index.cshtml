@@ -10,9 +10,10 @@
     { <div class="alert alert-warning">
         @TempData["Notice"]
     </div>}
-    <div class="content_top">
-        <div class="heading">
-            <h3>Sản phẩm mới</h3>
+    <div class="content_top text-center" style="background-image:url(/public/images/area_ism_banner.png);">
+        <div class="heading"  >
+            <h3 style="color:white;font-family:'Arial'">Sản phẩm mới</h3>
+            
         </div>
         <div class="clear"></div>
     </div>
@@ -78,20 +79,44 @@
                 if (kim.CategoryID == itemCat.CategoryID)
                 {
                     
-                        <a href="/Home/Category/@kim.id" style="display:inline-block;padding:7px 10px 0px 10px">@kim.Name</a>
-                    
+                        <a href="/Home/Category/@kim.id" style="display:inline-block;padding:0px 10px 0px 10px">
+                            @switch(kim.id)
+                                                {
+                                                    case 1: <img alt="sentai" />
+                                                        break;
+                                                    case 2: <img alt="rider"/>
+                                                        break;
+                                                    case 3: <img alt="ultraman"/>
+                                                        break;
+                                                    case 4: <img src="~/public/images/dc_universe_online_dock_icon_by_mrforknspoon-d4hsp0g.png" height="30px" width="30px" alt="DC" />
+                                                        break;
+                                                    case 5: <img alt="ultraman" />
+                                                        break;
+                                                    case 6: <img alt="ultraman" />
+                                                        break;
+                                                    case 7: <img alt="ultraman" />
+                                                        break;
+                                                    case 8: <img alt="ultraman" />
+                                                        break;
+                                                    case 9: <img alt="ultraman" />
+                                                        break;
+                            }
+                        </a>
+
+
                 }
-            }
-          
+                                        }
+
+
             <div class="clear"></div>
         </div>
         <div class="section group">
             @{int i = 0;
-            }
+                                }
             @foreach (Hierarchary xem in ViewBag.Hier)
-                        { 
-                            foreach (Product item in Model.Where(x => x.CategoryID == xem.id && xem.CategoryID == itemCat.CategoryID))
-                            {
+                                {
+                                    foreach (Product item in Model.Where(x => x.CategoryID == xem.id && xem.CategoryID == itemCat.CategoryID))
+                                    {
                 <div id="content" class="grid_1_of_4 images_1_of_4">
                     <div id="img">
                         <a href="@Url.Action("Details", "Home", new { id = item.ProductID })">
@@ -107,12 +132,12 @@
                         <div class="price-number">
                             <p>
                                 @if (item.Discount <= 0)
-                                {
+                            {
                                     <span class="rupees">$@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</span>
                                 }
                                 else
                                 {
-                                    <span class="rupees" style="color:black"><del>$@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</del></span>
+                                    <span class="rupees"><del>$@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</del></span>
                                     int price = int.Parse(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ") * item.Discount / 100;
                                     <span class="rupees" style="color:red"> $@price</span>
                                 }
