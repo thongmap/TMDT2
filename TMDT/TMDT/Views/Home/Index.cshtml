@@ -10,9 +10,9 @@
     { <div class="alert alert-warning">
         @TempData["Notice"]
     </div>}
-    <div class="content_top text-center" style="background-image:url(/public/images/area_ism_banner.png);">
+    <div class="content_top" style="background-image:url(/public/images/area_ism_banner.png);">
         <div class="heading"  >
-            <h3 style="color:white;font-family:'Arial'">Sản phẩm mới</h3>
+            <h3 style="color:white;font-family:'Arial'">Sản phẩm mới nhất</h3>
             
         </div>
         <div class="clear"></div>
@@ -70,9 +70,10 @@
     </div>
     @foreach (Category itemCat in ViewBag.Category)
     {
-        <div class="content_bottom">
-            <div class="heading">
-                <h3>@itemCat.CategoryName</h3>
+        
+        <div class="content_bottom" style="background: linear-gradient(90deg,#ff0000 5%,#ffffff 15%);">
+            <div class="heading" >
+                <h3 >@itemCat.CategoryName</h3>
             </div>
             @foreach (Hierarchary kim in ViewBag.Hier)
             {
@@ -88,7 +89,7 @@
                                                         break;
                                                     case 3: <img alt="ultraman"/>
                                                         break;
-                                                    case 4: <img src="~/public/images/dc_universe_online_dock_icon_by_mrforknspoon-d4hsp0g.png" height="30px" width="30px" alt="DC" />
+                                                    case 4: <img src="~/public/images/dc_universe_online_dock_icon_by_mrforknspoon-d4hsp0g.png" height="50px" width="50px" alt="DC" />
                                                         break;
                                                     case 5: <img alt="ultraman" />
                                                         break;

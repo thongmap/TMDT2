@@ -315,12 +315,14 @@ body {
 }
 .heading {
 	float: left;
+    width:10%
 }
 .heading h3 {
 	font-family: Calibri;
 	font-size:22px;
 	color:#383838;
 	text-transform: uppercase;
+    
 }
 .see {
 	float: right;
