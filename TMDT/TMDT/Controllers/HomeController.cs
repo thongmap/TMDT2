@@ -24,6 +24,7 @@ namespace TMDT.Controllers
         public ActionResult Index()
         {
             ViewBag.New = new ProductDAO().ListNewProduct(12);
+            ViewBag.Discount = new ProductDAO().ListDiscount();
             ViewBag.Category = new ProductDAO().ListAllCat();
             ViewBag.Hier = new HierDAO().ListAll();
             return View(new ProductDAO().ListAll());

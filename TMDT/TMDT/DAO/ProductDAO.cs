@@ -21,6 +21,10 @@ namespace TMDT.DAO
         {
             return db.Products.Where(x => x.AccountID == id).ToList();
         }
+        public List<Product> ListDiscount()
+        {
+            return db.Products.Where(x => x.Discount > 0).ToList();
+        }
         public List<Product> ListSold(int id)
         {
             return db.Products.Where(x => x.AccountID == id && x.DetailBills.Count > 0).ToList();

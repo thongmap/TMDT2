@@ -224,12 +224,15 @@
     <Content Include="public\font-awesome\css\font-awesome.min.css" />
     <Content Include="public\font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="public\font\glyphicons-halflings-regular.svg" />
+    <Content Include="public\images\088b761ab2afac5eb77b144ace372cdb.jpg" />
     <Content Include="public\images\area_ism_banner.png" />
     <Content Include="public\images\arrow-next.png" />
     <Content Include="public\images\arrow-prev.png" />
     <Content Include="public\images\arrow_up.png" />
+    <Content Include="public\images\chou_super_hero_taisen.jpg" />
     <Content Include="public\images\compare.png" />
     <Content Include="public\images\dc_universe_online_dock_icon_by_mrforknspoon-d4hsp0g.png" />
+    <Content Include="public\images\download11.jpg" />
     <Content Include="public\images\dribbble.png" />
     <Content Include="public\images\drop_arrow-hover.png" />
     <Content Include="public\images\drop_arrow.png" />
@@ -238,6 +241,7 @@
     <Content Include="public\images\list-img.png" />
     <Content Include="public\images\marvel-vs-dc-banner.png" />
     <Content Include="public\images\Marvel-vs-DC.jpg" />
+    <Content Include="public\images\marvel300.jpg" />
     <Content Include="public\images\nav_thumbs.png" />
     <Content Include="public\images\nenlogo.png" />
     <Content Include="public\images\plus-4-xxl.png" />

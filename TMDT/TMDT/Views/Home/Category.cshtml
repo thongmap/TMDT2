@@ -43,7 +43,7 @@
                     <h2>@Html.DisplayFor(modelitem => item.ProductName)</h2>
                     <h3>@Html.DisplayFor(modelitem => item.Account.UserName)</h3>
                     
-                    @Html.DisplayFor(modelitem => item.Info)
+                    <p>@Html.DisplayFor(modelitem => item.Info)</p>
                     <h2 style="color:red">
                         @if (item.Discount <= 0)
                         {
