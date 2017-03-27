@@ -123,6 +123,7 @@
                             <thead>
                                 <tr>
                                     <th style="font-weight:bolder;">Sản phẩm</th>
+                                    <th style="font-weight:bolder;">Hình ảnh</th>
                                     <th style="font-weight:bolder;">Số lượng</th>
                                     <th style="font-weight:bolder;">Giá</th>
                                 </tr>
@@ -134,12 +135,17 @@
                                     {
                                         <tr>
                                             <td>@item.Product.ProductName</td>
+                                            @{
+                                                string parameterValue = item.Product.Image.ToString().Substring(0, item.Product.Image.IndexOf("|"));
+                                            }
+                                            <td><img src="@Url.Content("/public/MyImages/" + Html.DisplayFor(modelitem => parameterValue))" width="50px" height="50px" /></td>
                                             <td>@item.Quantity</td>
                                             <td>@item.Product.Price</td>
                                         </tr>
                                     }
                                 }
                                 <tr>
+                                    <td></td>
                                     <td></td>
                                     <td style="font-weight:bolder;font-size:larger;">Thành tiền</td>
 

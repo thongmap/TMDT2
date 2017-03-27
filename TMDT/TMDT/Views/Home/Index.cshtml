@@ -12,7 +12,7 @@
     </div>}
     <div class="content_top" style="background-image:url(/public/images/area_ism_banner.png);">
         <div class="heading">
-            <h3 style="color:white;font-family:'Arial'">Sản phẩm mới nhất</h3>
+            <h3 style="color:white;font-family:'Arial'"><strong>Sản phẩm mới</strong></h3>
 
         </div>
         <div class="clear"></div>
@@ -22,15 +22,36 @@
             @foreach (var item in listnewproduct)
             {
                 <div>
-                    <div id="content" class="grid_1_of_4 images_1_of_4" style="width:98.5%;height:100%;padding:7%">
-                        <div id="img">
-                            <a href="@Url.Action("Details","Home", new { id=item.ProductID})"><img src="@Url.Content("/public/MyImages/"+Html.DisplayFor(modelitem => item.Image))" /></a>
-                            <h2>@Html.DisplayFor(modelitem => item.ProductName)</h2>
-                        </div>
-                        <div id="price" class="price-details">
+                    <a href="@Url.Action("Details","Home", new { id=item.ProductID})">
+                        <div id="content" class="grid_1_of_4 images_1_of_4" style="width:98.5%;height:100%;padding:7%">
+                            <div id="img">
+                                <img src="@Url.Content("/public/MyImages/"+Html.DisplayFor(modelitem => item.Image))" />
 
-                            <div class="price-number">
-                                <p>
+                                <h2>@Html.DisplayFor(modelitem => item.ProductName)</h2>
+                            </div>
+                            <div id="price" class="price-details">
+
+                                <div class="price-number">
+                                    <p>
+                                        @if (item.Discount <= 0)
+                                        {
+                                            <span class="rupees">$@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="rupees"><del>$@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</del></span>
+                                            int price = int.Parse(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ") * item.Discount / 100;
+                                            <span class="rupees" style="color:red"> $@price</span>
+                                        }
+                                    </p>
+                                </div>
+                            </div>
+                            <figure class="moreinfo">
+                                <h2>@Html.DisplayFor(modelitem => item.ProductName)</h2>
+                                <h3>@Html.DisplayFor(modelitem => item.Account.UserName)</h3>
+
+                                <p>@Html.DisplayFor(modelitem => item.Info)</p>
+                                <h2 style="color:red">
                                     @if (item.Discount <= 0)
                                     {
                                         <span class="rupees">$@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</span>
@@ -41,95 +62,80 @@
                                         int price = int.Parse(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ") * item.Discount / 100;
                                         <span class="rupees" style="color:red"> $@price</span>
                                     }
-                                </p>
-                            </div>
+                                </h2>
+                            </figure>
                         </div>
-                        <figure class="moreinfo">
-                            <h2>@Html.DisplayFor(modelitem => item.ProductName)</h2>
-                            <h3>@Html.DisplayFor(modelitem => item.Account.UserName)</h3>
-
-                            <p>@Html.DisplayFor(modelitem => item.Info)</p>
-                            <h2 style="color:red">
-                                @if (item.Discount <= 0)
-                                {
-                                    <span class="rupees">$@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</span>
-                                }
-                                else
-                                {
-                                    <span class="rupees"><del>$@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</del></span>
-                                    int price = int.Parse(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ") * item.Discount / 100;
-                                    <span class="rupees" style="color:red"> $@price</span>
-                                }
-                            </h2>
-
-                        </figure>
-                    </div>
+                    </a>
                 </div>
             }
         </div>
     </div>
     <div style="float:left;width:74%">
-        <div class="content_bottom" style="background: linear-gradient(90deg,#ffd800 5%,#ffffff 15%);">
+        <div class="content_bottom" style="background: linear-gradient(90deg,#ffd800 17%,#ffffff 51%);">
             <div class="heading">
-                <h3>Giảm giá mỗi ngày</h3>
+                <h3><strong style="color:white;">Giảm giá mỗi ngày</strong></h3>
             </div>
             <div class="clear"></div>
         </div>
+
         <div class="section group">
             @{int j = 0;
             }
                 @foreach (Product item in ViewBag.Discount)
                 {
-                    <div id="content" class="grid_1_of_4 images_1_of_4">
-                        <div id="img">
-                            <a href="@Url.Action("Details", "Home", new { id = item.ProductID })">
+                    <a href="@Url.Action("Details", "Home", new { id = item.ProductID })">
+                        <div id="content" class="grid_1_of_4 images_1_of_4">
+                            <div id="img">
+
                                 @{
                                     string parameterValue = item.Image.ToString().Substring(0, item.Image.IndexOf("|"));
                                 }
                                 <img src="@Url.Content("/public/MyImages/" + Html.DisplayFor(modelitem => parameterValue))" />
-                            </a>
-                            <h2>@Html.DisplayFor(modelitem => item.ProductName)</h2>
-                        </div>
-                        <div id="price" class="price-details">
 
-                            <div class="price-number">
-                                <p>
-                                    @if (item.Discount <= 0)
-                                    {
-                                        <span class="rupees">$@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</span>
-                                    }
-                                    else
-                                    {
-                                        <span class="rupees"><del>$@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</del></span>
-                                        int price = int.Parse(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ") * item.Discount / 100;
-                                        <span class="rupees" style="color:red"> $@price</span>
-                                    }
-                                </p>
+                                <h2>@Html.DisplayFor(modelitem => item.ProductName)</h2>
+                            </div>
+                            <div id="price" class="price-details">
+
+                                <div class="price-number">
+                                    <p>
+                                        @if (item.Discount <= 0)
+                                        {
+                                            <span class="rupees">$@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="rupees"><del>$@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</del></span>
+                                            int price = int.Parse(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ") * item.Discount / 100;
+                                            <span class="rupees" style="color:red"> $@price</span>
+                                        }
+                                    </p>
+                                </div>
+                            </div>
+                            <figure class="moreinfo">
+                               
+                                    <h2>@Html.DisplayFor(modelitem => item.ProductName)</h2>
+                                    <h3>@Html.DisplayFor(modelitem => item.Account.UserName)</h3>
+
+                                    <p>@Html.DisplayFor(modelitem => item.Info)</p>
+                                    <h2 style="color:red">
+                                        @if (item.Discount <= 0)
+                                        {
+                                            <span class="rupees">$@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="rupees"><del>$@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</del></span>
+                                            int price = int.Parse(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ") * item.Discount / 100;
+                                            <span class="rupees" style="color:red"> $@price</span>
+                                        }
+                                    </h2>
+                               
+                            </figure>
+                            <div class="discountinfo">
+                                <span style="background-color:red;color:white">-@Html.DisplayFor(modelitem => item.Discount)%</span>
                             </div>
                         </div>
-                        <figure class="moreinfo">
-                            <h2>@Html.DisplayFor(modelitem => item.ProductName)</h2>
-                            <h3>@Html.DisplayFor(modelitem => item.Account.UserName)</h3>
-
-                            <p>@Html.DisplayFor(modelitem => item.Info)</p>
-                            <h2 style="color:red">
-                                @if (item.Discount <= 0)
-                                {
-                                    <span class="rupees">$@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</span>
-                                }
-                                else
-                                {
-                                    <span class="rupees"><del>$@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</del></span>
-                                    int price = int.Parse(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ") * item.Discount / 100;
-                                    <span class="rupees" style="color:red"> $@price</span>
-                                }
-                            </h2>
-
-                        </figure>
-                        <div class="discountinfo">
-                            <span style="background-color:red">-@Html.DisplayFor(modelitem => item.Discount)%</span>
-                        </div>
-                    </div>
+                    </a>
                                         j++;
                                         if (j == 4)
                                         {
@@ -137,7 +143,14 @@
                                         }
                                     }
         </div>
-
+        <div style="overflow:auto">
+            <div style="float:left;width:49.5%">
+                <img src="~/public/images/maxresdefault.jpg" />
+            </div>
+            <div style="float:right;width:49.5%">
+                <img src="~/public/images/maxresdefault.jpg"    />
+            </div>
+        </div>
             @foreach (Category itemCat in ViewBag.Category)
             {
                 <div class="content_bottom" style="background: linear-gradient(90deg,#ff0000 5%,#ffffff 15%);">
@@ -188,22 +201,42 @@
                 {
                     foreach (Product item in Model.Where(x => x.CategoryID == xem.id && xem.CategoryID == itemCat.CategoryID))
                     {
-                            <div id="content" class="grid_1_of_4 images_1_of_4">
-                                <div id="img">
-                                    <a href="@Url.Action("Details", "Home", new { id = item.ProductID })">
+                            <a href="@Url.Action("Details", "Home", new { id = item.ProductID })">
+                                <div id="content" class="grid_1_of_4 images_1_of_4">
+                                    <div id="img">
+
                                         @{
                                             string parameterValue = item.Image.ToString().Substring(0, item.Image.IndexOf("|"));
                                         }
                                         <img src="@Url.Content("/public/MyImages/" + Html.DisplayFor(modelitem => parameterValue))" />
-                                    </a>
-                                    <h2>@Html.DisplayFor(modelitem => item.ProductName)</h2>
-                                </div>
-                                <div id="price" class="price-details">
 
-                                    <div class="price-number">
-                                        <p>
+                                        <h2>@Html.DisplayFor(modelitem => item.ProductName)</h2>
+                                    </div>
+                                    <div id="price" class="price-details">
+
+                                        <div class="price-number">
+                                            <p>
+                                                @if (item.Discount <= 0)
+                                                {
+                                                    <span class="rupees">$@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="rupees"><del>$@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</del></span>
+                                                    int price = int.Parse(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ") * item.Discount / 100;
+                                                    <span class="rupees" style="color:red"> $@price</span>
+                                                }
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <figure class="moreinfo">
+                                        <h2>@Html.DisplayFor(modelitem => item.ProductName)</h2>
+                                        <h3>@Html.DisplayFor(modelitem => item.Account.UserName)</h3>
+
+                                        <p>@Html.DisplayFor(modelitem => item.Info)</p>
+                                        <h2 style="color:red">
                                             @if (item.Discount <= 0)
-                                            {
+                        {
                                                 <span class="rupees">$@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</span>
                                             }
                                             else
@@ -212,29 +245,11 @@
                                                 int price = int.Parse(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ") * item.Discount / 100;
                                                 <span class="rupees" style="color:red"> $@price</span>
                                             }
-                                        </p>
-                                    </div>
+                                        </h2>
+
+                                    </figure>
                                 </div>
-                                <figure class="moreinfo">
-                                    <h2>@Html.DisplayFor(modelitem => item.ProductName)</h2>
-                                    <h3>@Html.DisplayFor(modelitem => item.Account.UserName)</h3>
-
-                                    <p>@Html.DisplayFor(modelitem => item.Info)</p>
-                                    <h2 style="color:red">
-                                        @if (item.Discount <= 0)
-                        {
-                                            <span class="rupees">$@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</span>
-                                        }
-                                        else
-                                        {
-                                            <span class="rupees"><del>$@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</del></span>
-                                            int price = int.Parse(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ") * item.Discount / 100;
-                                            <span class="rupees" style="color:red"> $@price</span>
-                                        }
-                                    </h2>
-
-                                </figure>
-                            </div>
+                            </a>
                                                     i++;
                                                     if (i == 4)
                                                     {
@@ -256,7 +271,6 @@
         <img src="~/public/images/088b761ab2afac5eb77b144ace372cdb.jpg" width="99%" height="99%"/>
     </div>
 </div>
-
 
 <script src="~/Scripts/slick/slick.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">

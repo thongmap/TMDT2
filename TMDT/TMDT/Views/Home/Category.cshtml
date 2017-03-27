@@ -15,16 +15,37 @@
     <div class="section group">
         @foreach (var item in Model)
         {
-            <div class="grid_1_of_4 images_1_of_4" id="content" >
-                <div id="img">
-                    <a href="@Url.Action("Details","Home", new { id=item.ProductID})">
+            <a href="@Url.Action("Details","Home", new { id=item.ProductID})">
+                <div class="grid_1_of_4 images_1_of_4" id="content">
+                    <div id="img">
+
                         <img src="@Url.Content("/public/MyImages/"+Html.DisplayFor(modelitem => item.Image))" />
                         <h2>@Html.DisplayFor(modelitem => item.ProductName)</h2>
-                    </a>
-                </div>      
-                <div id="price" class="price-details">
-                    <div class="price-number">
-                        <p>
+
+                    </div>
+                    <div id="price" class="price-details">
+                        <div class="price-number">
+                            <p>
+                                @if (item.Discount <= 0)
+                                {
+                                    <span class="rupees">$@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</span>
+                                }
+                                else
+                                {
+                                    <span class="rupees"><del>$@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</del></span>
+                                    int price = int.Parse(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ") * item.Discount / 100;
+                                    <span class="rupees" style="color:red"> $@price</span>
+                                }
+                            </p>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                    <figure class="moreinfo">
+                        <h2>@Html.DisplayFor(modelitem => item.ProductName)</h2>
+                        <h3>@Html.DisplayFor(modelitem => item.Account.UserName)</h3>
+
+                        <p>@Html.DisplayFor(modelitem => item.Info)</p>
+                        <h2 style="color:red">
                             @if (item.Discount <= 0)
                             {
                                 <span class="rupees">$@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</span>
@@ -35,31 +56,12 @@
                                 int price = int.Parse(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ") * item.Discount / 100;
                                 <span class="rupees" style="color:red"> $@price</span>
                             }
-                        </p>
-                    </div>
-                    <div class="clear"></div>
-                </div>
-                <figure class="moreinfo" >
-                    <h2>@Html.DisplayFor(modelitem => item.ProductName)</h2>
-                    <h3>@Html.DisplayFor(modelitem => item.Account.UserName)</h3>
-                    
-                    <p>@Html.DisplayFor(modelitem => item.Info)</p>
-                    <h2 style="color:red">
-                        @if (item.Discount <= 0)
-                        {
-                            <span class="rupees">$@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</span>
-                        }
-                        else
-                        {
-                            <span class="rupees"><del>$@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</del></span>
-                            int price = int.Parse(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ") * item.Discount / 100;
-                            <span class="rupees" style="color:red"> $@price</span>
-                        }
-                    </h2>
+                        </h2>
 
-                </figure>
-            </div>
-           
+                    </figure>
+                </div>
+            </a>
+
         }
     </div>
 </div>

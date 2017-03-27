@@ -315,7 +315,6 @@ body {
 }
 .heading {
 	float: left;
-    width:15%
 }
 .heading h3 {
 	font-family: Calibri;
@@ -410,15 +409,15 @@ body {
     top:0px;
     text-align:left;
     font-size:25px;
-    transition-duration:1s;
     padding:5% 0 0 10%;
 }
 .discountinfo{
     position:absolute;
-    top:0px;
     float:right;
+    top:0px;
     text-align:right;
     font-size:25px;
+    padding-left:72%;
 }
 .add-cart{
 	float:right;
