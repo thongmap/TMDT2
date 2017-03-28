@@ -279,13 +279,21 @@ namespace TMDT.Controllers
             return View();
         }
         [HttpGet]
-        public ActionResult Order(int? index, int?  limitTime, int? status)
+        public ActionResult Order(int? index, int?  limitTime, int? status,string email)
         {
-            var user = Session["User"] as TMDT.Account;
-            if (user == null)
-                return RedirectToAction("Login", "Home");
-            var model=new BillDAO().ViewOrder(index,limitTime,status,user.AccountID);           
-            return View(model);
+            if (String.IsNullOrEmpty(email))
+            {
+                var user = Session["User"] as TMDT.Account;
+                if (user == null)
+                    return RedirectToAction("Login", "Home");
+                var model = new BillDAO().ViewOrder(index, limitTime, status, user.AccountID);
+                return View(model);
+            }
+            else
+            {
+                var model = new BillDAO().ViewOrder(index, limitTime, status, email);
+                return View(model);
+            }
         }  
 
         [HttpGet]

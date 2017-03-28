@@ -153,7 +153,61 @@ namespace TMDT.DAO
             }
             return listbill;
         }
+        public List<Bill> ViewOrder(int? index, int? limitTime, int? status, string email)
+        {
+            List<Bill> listbill = new List<Bill>();
+            var bill = db.Bills.Where(x => x.ShipEmail.Equals(email)).ToList();
+            if (index == 0)
+            {
+                foreach (var b in bill)
+                {
+                    if (limitTime == null && status == null)
+                    {
+                        listbill.Add(b);
+                    }
+                    if (limitTime == 0)
+                    {
+                        TimeSpan time = DateTime.Now - b.CreatedDate;
+                        int timepast = time.Days;
+                        if (timepast <= 30)
+                        {
+                            listbill.Add(b);
+                        }
+                    }
+                    if (limitTime == 1)
+                    {
+                        DateTime time = DateTime.Now.AddMonths(-6);
 
+                        if (b.CreatedDate >= time)
+                        {
+                            listbill.Add(b);
+                        }
+                    }
+                    if (limitTime == 2)
+                    {
+                        if (b.CreatedDate.Year == DateTime.Now.Year)
+                        {
+                            listbill.Add(b);
+                        }
+                    }
+                    if (status == 0)
+                    {
+                        if (b.Status == "Chưa hoàn tất")
+                            listbill.Add(b);
+                    }
+                    if (status == 1)
+                    {
+                        if (b.Status == "Hoàn tất")
+                            listbill.Add(b);
+                    }
+                }
+            }
+            if (index == null && limitTime == null)
+            {
+                listbill = bill;
+            }
+            return listbill;
+        }
         public List<DetailBill> GetDetailBill_BillID(int id)
         {
             var model = db.DetailBills.Where(x => x.BillID == id).OrderBy(x => x.AccountID).ToList();

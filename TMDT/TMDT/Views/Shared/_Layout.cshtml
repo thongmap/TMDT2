@@ -27,6 +27,19 @@
     @Scripts.Render("~/bundles/modernizr")
     <link rel="stylesheet" type="text/css" href="~/Scripts/slick/slick.css">
     <link rel="stylesheet" type="text/css" href="~/Scripts/slick/slick-theme.css">
+    <script>
+        function EnterEmail()
+        {
+            var mailreg = /^(([^<>()\[\]\\.,;:\s@@"]+(\.[^<>()\[\]\\.,;:\s@@"]+)*)|(".+"))@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            var email = prompt("Mời bạn nhập địa chỉ e-mail của bạn");
+            if (email == null || email.length < 1)
+                alert("Bạn chưa nhập email");
+            if (!mailreg.test(email))
+                alert("Xin nhập chính xác địa chỉ email");
+            else
+                location.href = '/CartItem/Order?email='+ email;
+        }
+    </script>
 </head>
 <body>
     <div class="wrap">
@@ -38,7 +51,9 @@
                 <div class="account_desc">
                     <ul>
                         <li><a href="#" data-toggle="modal" data-target="#myModal">Tìm kiếm nâng cao</a></li>
-                        <li><a href="/Merchant/Sell">Đăng sản phẩm mới</a></li>
+                        <li>
+                            <a onclick="EnterEmail()">Xem đơn đặt hàng</a>
+                        </li>
                         <li><a href="/CartItem/Index">Giỏ hàng 
                          @if (Session["CartCount"] != null)
                         {
@@ -96,10 +111,7 @@
                                         <a href="@Url.Action("Index", "Merchant", new { id = @user.AccountID })">Xem sản phẩm bán</a>
                                     </li>
                                     }
-                                    <li class="divider"></li>
-                                    <li>
-                                        <a href="@Url.Action("Order", "CartItem", new { id=@user.AccountID})">Xem đơn đặt hàng</a>
-                                    </li>
+                                   
                                     <li class="divider"></li>
                                     <li>
                                         <a href="/Home/Logout">Đăng xuất</a>

@@ -26,15 +26,18 @@
                 <li><a href="@Url.Action("Order", "CartItem",new { index=0,limitTime=2})">Trong năm @DateTime.Now.Year.ToString()</a></li>
                 <li><a href="@Url.Action("Order", "CartItem",new { index=0,status=0 })">Chưa hoàn tất</a></li>
                 <li><a href="@Url.Action("Order", "CartItem",new { index=0,status=1 })">Hoàn tất</a></li>
-                @if (user.Level == 1)
+                @if (user != null)
                 {
+                    if (user.Level == 1)
+                    {
                     <li class="divider"></li>
-                    <li class="dropdown-header"><a href="@Url.Action("Order", "CartItem",new { index=1})">Đơn bán hàng</a></li>
-                    <li><a href="@Url.Action("Order", "CartItem",new { index=1,limitTime=0})">Trong 30 ngày gần đây</a></li>
-                    <li><a href="@Url.Action("Order", "CartItem",new { index=1,limitTime=1})">Trong 6 tháng gần đây</a></li>
-                    <li><a href="@Url.Action("Order", "CartItem",new { index=1,limitTime=2})">Trong năm @DateTime.Now.Year.ToString()</a></li>
-                    <li><a href="@Url.Action("Order", "CartItem",new { index=1,status=0 })">Chưa hoàn tất</a></li>
-                    <li><a href="@Url.Action("Order", "CartItem",new { index=1,status=1 })">Hoàn tất</a></li>
+                    <li class="dropdown-header"><a href="@Url.Action("Order", "CartItem", new { index = 1 })">Đơn bán hàng</a></li>
+                    <li><a href="@Url.Action("Order", "CartItem", new { index = 1, limitTime = 0 })">Trong 30 ngày gần đây</a></li>
+                    <li><a href="@Url.Action("Order", "CartItem", new { index = 1, limitTime = 1 })">Trong 6 tháng gần đây</a></li>
+                    <li><a href="@Url.Action("Order", "CartItem", new { index = 1, limitTime = 2 })">Trong năm @DateTime.Now.Year.ToString()</a></li>
+                    <li><a href="@Url.Action("Order", "CartItem", new { index = 1, status = 0 })">Chưa hoàn tất</a></li>
+                    <li><a href="@Url.Action("Order", "CartItem", new { index = 1, status = 1 })">Hoàn tất</a></li>
+                    }
                 }
             </ul>
         </div>
@@ -45,22 +48,27 @@
                     <tr>
                         <th>STT</th>
                         <th>Ngày đặt hàng 
-                        @if (user.Level == 1)
+                        @if (user != null)
                         {
+                            if (user.Level == 1)
+                            {
                             <div class="dropdown pull-right">
                                 <button class="btn btn-default dropdown-toggle glyphicon-triangle-bottom" type="button" data-toggle="dropdown">
                                     <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li><a href="@Url.Action("Sort", "CartItem",new { sort=0,date=0})">Giảm dần</a></li>
-                                    <li><a href="@Url.Action("Sort", "CartItem",new { sort=0,date=1})">Tăng dần</a></li>
+                                    <li><a href="@Url.Action("Sort", "CartItem", new { sort = 0, date = 0 })">Giảm dần</a></li>
+                                    <li><a href="@Url.Action("Sort", "CartItem", new { sort = 0, date = 1 })">Tăng dần</a></li>
                                 </ul>
                             </div>
-                        } 
+                            }
+                        }
                         </th>
                         <th>Tổng tiền
-                            @if (user.Level == 1)
+                            @if (user != null)
                             {
+                                if (user.Level == 1)
+                                {
                                 <div class="dropdown pull-right">
                                     <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
                                         <span class="glyphicon glyphicon-triangle-bottom"></span>
@@ -70,12 +78,16 @@
                                         <li><a href="@Url.Action("Sort", "CartItem", new { sort = 1, sum = 1 })">Tăng dần</a></li>
                                     </ul>
                                 </div>
+                                }
                             }</th>
                         <th>Tình trạng</th>
                         <th>Xem chi tiết</th>
-                        @if (user.Level == 1)
+                        @if (user != null)
                         {
+                            if (user.Level == 1)
+                            {
                             <th>#</th>}
+                        }
                     </tr>
                 </thead>
                 <tbody>
@@ -89,17 +101,24 @@
                             <td>@item.SumMoney</td>
                             <td>@item.Status</td>
                             <td>
-                                 @if (user.Level == 1 && user.AccountID != item.AccountID)
-                                {<a href="@Url.Action("OrderMerchant", "Merchant", new { id = item.BillID})" title="Xem chi tiết hàng bán" class="btn-images btn btn btn-default">Xem hàng bán</a>}
-                                 else
-                                 { <a href="@Url.Action("OrderDetail", "CartItem", new { id = item.BillID})" title="Xem chi tiết hàng mua" class="btn-images btn btn btn-default">Xem hàng mua</a>}
+                                 @if (user != null)
+                                 {
+                                     if (user.Level == 1 && user.AccountID != item.AccountID)
+                                     {<a href="@Url.Action("OrderMerchant", "Merchant", new { id = item.BillID })" title="Xem chi tiết hàng bán" class="btn-images btn btn btn-default">Xem hàng bán</a>}
+                                     else
+                                     { <a href="@Url.Action("OrderDetail", "CartItem", new { id = item.BillID })" title="Xem chi tiết hàng mua" class="btn-images btn btn btn-default">Xem hàng mua</a>}
+                                 }
                             </td>
-                            @if (user.Level == 1 && user.AccountID != item.AccountID)
+@if (user != null)
+{
+                            if (user.Level == 1 && user.AccountID != item.AccountID)
                             {
                                 <td><button type="button" @(item.Status == "Hoàn tất" ? "disabled" : "") class="btn btn-default btn1" data-toggle="modal" data-target="#myModal1" data-id="@item.BillID" title="Cập nhật trạng thái đơn đặt hàng">Cập nhật trạng thái</button></td>
                             }
+}
                         </tr>
                     }
+                    
                 </tbody>
             </table>
         </div>
