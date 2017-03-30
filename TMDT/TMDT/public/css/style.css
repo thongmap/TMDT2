@@ -88,6 +88,7 @@ body {
 }
 .logo {
 	float: left;
+    height:330px;
 }
 
 /**** Cart ****/
@@ -209,7 +210,6 @@ body {
     text-decoration:none;
 }
 .menu li:first-child  a{
-	border-radius:6px 0 0 6px;
 	-webkit-border-radius:6px 0 0 6px;
 	-moz-border-rfadius:6px 0 0 6px;
 	-o-border-radius:6px 0 0 6px;
@@ -303,7 +303,6 @@ body {
 .content_top{
 	padding: 15px 20px;
 	border: 1px solid #EBE8E8;
-	border-radius: 3px;
     background:#FFF;
 }
 .content_bottom {

@@ -237,7 +237,9 @@
     <Content Include="public\images\dribbble.png" />
     <Content Include="public\images\drop_arrow-hover.png" />
     <Content Include="public\images\drop_arrow.png" />
+    <Content Include="public\images\exaidlogo.png" />
     <Content Include="public\images\facebook.png" />
+    <Content Include="public\images\kojurochibi.jpg" />
     <Content Include="public\images\linkedin.png" />
     <Content Include="public\images\list-img.png" />
     <Content Include="public\images\marvel-vs-dc-banner.png" />
@@ -252,6 +254,7 @@
     <Content Include="public\images\redrating.png" />
     <Content Include="public\images\redstar.png" />
     <Content Include="public\images\search.png" />
+    <Content Include="public\images\sentailogo.png" />
     <Content Include="public\images\skype.png" />
     <Content Include="public\images\tag.png" />
     <Content Include="public\images\twitter.png" />
@@ -395,6 +398,8 @@
     <Content Include="Scripts\slick\slick.less" />
     <Content Include="Scripts\slick\slick.scss" />
     <Content Include="Views\CartItem\OnlinePay.cshtml" />
+    <Content Include="Views\Home\AboutUS.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

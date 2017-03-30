@@ -29,6 +29,16 @@ namespace TMDT.Controllers
             ViewBag.Hier = new HierDAO().ListAll();
             return View(new ProductDAO().ListAll());
         }
+        public ActionResult AboutUS()
+        {
+            //Add view
+            return View();
+        }
+        public ActionResult Contact()
+        {
+            //add view
+            return View();
+        }
         public ActionResult GetData()
         {
             TMDTModel db = new TMDTModel();
