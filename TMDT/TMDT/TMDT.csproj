@@ -140,6 +140,10 @@
       <Private>True</Private>
       <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="WebActivator, Version=1.4.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivator.1.4.2\lib\net40\WebActivator.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
@@ -246,6 +250,7 @@
     <Content Include="public\images\Marvel-vs-DC.jpg" />
     <Content Include="public\images\marvel300.jpg" />
     <Content Include="public\images\maxresdefault.jpg" />
+    <Content Include="public\images\menu-icon.png" />
     <Content Include="public\images\nav_thumbs.png" />
     <Content Include="public\images\nenlogo.png" />
     <Content Include="public\images\plus-4-xxl.png" />
