@@ -36,7 +36,7 @@
                             @foreach (Hierarchary intem in Model.Where(x => x.CategoryID == item.CategoryID))
                             {
                             <li class="divider"></li>
-                            <li style="width:100.5%">
+                            <li style="width:100%">
                                 <a href="@Url.Action("Category","Home",new { @id = intem.id })">@Html.DisplayFor(modelitem => intem.Name)</a>
                             </li>
                             }

@@ -4,11 +4,6 @@
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@{ 
-    if (ViewBag.Same == null)
-    {
-        <span>fihùiewìuhưihfưhu</span>}
-}
 <style>
     .sliderthumb.slick-initialized.slick-slider button.slick-prev:before,
     .sliderthumb.slick-initialized.slick-slider button.slick-next:before {
@@ -49,7 +44,7 @@
                 
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6" style="overflow:hidden">
             <h3 class="text-center"><b>THÔNG TIN SẢN PHẨM</b></h3>
             <dl class="dl-horizontal">
                 <dt>
