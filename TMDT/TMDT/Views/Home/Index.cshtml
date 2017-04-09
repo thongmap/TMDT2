@@ -28,6 +28,7 @@
                                 <img src="@Url.Content("/public/MyImages/"+Html.DisplayFor(modelitem => item.Image))" />
 
                                 <h2>@Html.DisplayFor(modelitem => item.ProductName)</h2>
+                                <h3>@Html.DisplayFor(modelitem => item.Info).ToString().Substring(0, 45)...</h3>
                             </div>
                             <div id="price" class="price-details">
 
@@ -70,7 +71,7 @@
             }
         </div>
     </div>
-    <div style="float:left;width:74%">
+    <div id="contentindex" style="float:left">
         <div class="content_bottom" style="background: linear-gradient(90deg,#ffd800 17%,#ffffff 51%);">
             <div class="heading">
                 <h3><strong style="color:white;">Giảm giá mỗi ngày</strong></h3>
@@ -93,6 +94,7 @@
                                 <img src="@Url.Content("/public/MyImages/" + Html.DisplayFor(modelitem => parameterValue))" />
 
                                 <h2>@Html.DisplayFor(modelitem => item.ProductName)</h2>
+                                <h3>@Html.DisplayFor(modelitem => item.Info).ToString().Substring(0, 45)...</h3>
                             </div>
                             <div id="price" class="price-details">
 
@@ -211,6 +213,7 @@
                                         <img src="@Url.Content("/public/MyImages/" + Html.DisplayFor(modelitem => parameterValue))" />
 
                                         <h2>@Html.DisplayFor(modelitem => item.ProductName)</h2>
+                                        <h3>@Html.DisplayFor(modelitem => item.Info).ToString().Substring(0,45)...</h3>
                                     </div>
                                     <div id="price" class="price-details">
 
@@ -265,7 +268,7 @@
                
                                             }
     </div>
-    <div style="width:25%;float:right;padding-top:2.25%">
+    <div id="sponserIMG" style="width:25%;float:right;padding-top:2.25%">
         <img src="~/public/images/chou_super_hero_taisen.jpg"  width="99%" height="99%"/>
         <img src="~/public/images/download11.jpg" width="99%" height="99%"/>
         <img src="~/public/images/088b761ab2afac5eb77b144ace372cdb.jpg" width="99%" height="99%"/>
@@ -274,10 +277,17 @@
 
 <script src="~/Scripts/slick/slick.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
+    var stS = 0;
+    $(function () {
+        if ($(window).width() > 1000)
+            stS = 4;
+        else
+            stS = 3;
+    });
     $(document).on('ready', function() {
         $(".myslider").slick({
         infinite: true,
-        slidesToShow: 4,
+        slidesToShow: stS,
         slidesToScroll: 4,
             autoplay:true
       });      

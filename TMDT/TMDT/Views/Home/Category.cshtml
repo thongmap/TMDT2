@@ -3,14 +3,36 @@
 @{
     ViewBag.Title = "Category";
     Layout = "~/Views/Shared/_Layout.cshtml";
-
+    int i = ViewBag.ID;
+    
 }
 <div class="content">
-    <div class="content_top">
+    <div class="content_top" style="overflow:hidden">
         <div class="heading">
-            <h3>@ViewBag.CatName</h3>
+           
+            <h3>@switch (i)
+            {
+                case 1: <img src="~/public/images/sentailogo.png" height="50px" alt="sentai" />
+                    break;
+                case 2: <img src="~/public/images/kamen_rider_1_logo_by_animedark2-d9e34m7.png" height="50px" alt="rider" />
+                    break;
+                case 3: <img src="~/public/images/Ultraman_Logo.png" height="50px" alt="ultraman" />
+                    break;
+                case 4: <img src="~/public/images/dc_universe_online_dock_icon_by_mrforknspoon-d4hsp0g.png" height="50px" alt="DC" />
+                    break;
+                case 5: <img src="~/public/images/marvel300.jpg" height="50px" alt="Marvel" />
+                    break;
+                case 6: <img alt="skyrim" />
+                    break;
+                case 7: <img alt="Power ranger" />
+                    break;
+                case 8: <img alt="Star wars" />
+                    break;
+                case 9: <img alt="Gundam" />
+                    break;
+            } </h3>
         </div>
-        <div class="clear"></div>
+       
     </div>
     <div class="section group">
         @foreach (var item in Model)

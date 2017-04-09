@@ -421,6 +421,10 @@ a:hover#menu-icon {
     font-size:25px;
     padding-left:72%;
 }
+#contentindex
+{
+    width:74%;
+}
 .add-cart{
 	float:right;
 	display: inline-block;
@@ -1490,6 +1494,9 @@ a:hover#menu-icon {
 	.images_1_of_4 h2{
 		font-size:0.4em;
 	}
+    .images_1_of_4 h3{
+		font-size:0.3em;
+	}
 	.see{
 		padding-top:0;
 	}
@@ -1627,8 +1634,15 @@ a:hover#menu-icon {
         font-size:10px;
 	}
     .images_1_of_4 img{
-        height:50px;
-        width:50px;
+        height:70px;
+        width:70px;
+    }
+    #sponserIMG
+    {
+        display:none;
+    }
+    #contentindex{
+        width:100%;
     }
 	.price-number{
 		float:none;

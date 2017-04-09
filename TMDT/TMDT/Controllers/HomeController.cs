@@ -331,6 +331,7 @@ namespace TMDT.Controllers
                 item.Image = item.Image.Substring(0, i);
             }
             ViewBag.CatName = new HierDAO().HierName(id);
+            ViewBag.ID = id;
             return View(model);
         }
 
