@@ -1,0 +1,286 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var listnewproduct = (List<TMDT.Product>)ViewBag.New;
+
+}
+@model IEnumerable<TMDT.Product>
+<div class="content" style="overflow:hidden">
+    @if (TempData["Notice"] != null)
+    { <div class="alert alert-warning">
+        @TempData["Notice"]
+    </div>}
+    <div class="content_top" style="background-image:url(/public/images/area_ism_banner.png);">
+        <div class="heading">
+            <h3 style="color:white;font-family:'Arial'"><strong>Sản phẩm mới</strong></h3>
+
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="section group">
+        <div class="myslider">
+            @foreach (var item in listnewproduct)
+            {
+                <div>
+                    <a href="@Url.Action("Details","Home", new { id=item.ProductID})">
+                        <div id="content" class="grid_1_of_4 images_1_of_4" style="width:98.5%;height:100%;padding:7%">
+                            <div id="img">
+                                <img src="@Url.Content("/public/MyImages/"+Html.DisplayFor(modelitem => item.Image))" />
+
+                                <h2>@Html.DisplayFor(modelitem => item.ProductName)</h2>
+                                <h3>@Html.DisplayFor(modelitem => item.Info).ToString().Substring(0, 45)...</h3>
+                            </div>
+                            <div id="price" class="price-details">
+
+                                <div class="price-number">
+                                    <p>
+                                        @if (item.Discount <= 0)
+                                        {
+                                            <span class="rupees">$@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="rupees"><del>$@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</del></span>
+                                            int price = int.Parse(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ") * item.Discount / 100;
+                                            <span class="rupees" style="color:red"> $@price</span>
+                                        }
+                                    </p>
+                                </div>
+                            </div>
+                            <figure class="moreinfo">
+                                <h2>@Html.DisplayFor(modelitem => item.ProductName)</h2>
+                                <h3>@Html.DisplayFor(modelitem => item.Account.UserName)</h3>
+
+                                <p>@Html.DisplayFor(modelitem => item.Info)</p>
+                                <h2 style="color:red">
+                                    @if (item.Discount <= 0)
+                                    {
+                                        <span class="rupees">$@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="rupees"><del>$@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</del></span>
+                                        int price = int.Parse(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ") * item.Discount / 100;
+                                        <span class="rupees" style="color:red"> $@price</span>
+                                    }
+                                </h2>
+                            </figure>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+    <div id="contentindex" style="float:left">
+        <div class="content_bottom" style="background: linear-gradient(90deg,#ffd800 17%,#ffffff 51%);">
+            <div class="heading">
+                <h3><strong style="color:white;">Giảm giá mỗi ngày</strong></h3>
+            </div>
+            <div class="clear"></div>
+        </div>
+
+        <div class="section group">
+            @{int j = 0;
+            }
+                @foreach (Product item in ViewBag.Discount)
+                {
+                    <a href="@Url.Action("Details", "Home", new { id = item.ProductID })">
+                        <div id="content" class="grid_1_of_4 images_1_of_4">
+                            <div id="img">
+
+                                @{
+                                    string parameterValue = item.Image.ToString().Substring(0, item.Image.IndexOf("|"));
+                                }
+                                <img src="@Url.Content("/public/MyImages/" + Html.DisplayFor(modelitem => parameterValue))" />
+
+                                <h2>@Html.DisplayFor(modelitem => item.ProductName)</h2>
+                                <h3>@Html.DisplayFor(modelitem => item.Info).ToString().Substring(0, 45)...</h3>
+                            </div>
+                            <div id="price" class="price-details">
+
+                                <div class="price-number">
+                                    <p>
+                                        @if (item.Discount <= 0)
+                                        {
+                                            <span class="rupees">$@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="rupees"><del>$@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</del></span>
+                                            int price = int.Parse(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ") * item.Discount / 100;
+                                            <span class="rupees" style="color:red"> $@price</span>
+                                        }
+                                    </p>
+                                </div>
+                            </div>
+                            <figure class="moreinfo">
+                               
+                                    <h2>@Html.DisplayFor(modelitem => item.ProductName)</h2>
+                                    <h3>@Html.DisplayFor(modelitem => item.Account.UserName)</h3>
+
+                                    <p>@Html.DisplayFor(modelitem => item.Info)</p>
+                                    <h2 style="color:red">
+                                        @if (item.Discount <= 0)
+                                        {
+                                            <span class="rupees">$@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="rupees"><del>$@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</del></span>
+                                            int price = int.Parse(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ") * item.Discount / 100;
+                                            <span class="rupees" style="color:red"> $@price</span>
+                                        }
+                                    </h2>
+                               
+                            </figure>
+                            <div class="discountinfo">
+                                <span style="background-color:red;color:white">-@Html.DisplayFor(modelitem => item.Discount)%</span>
+                            </div>
+                        </div>
+                    </a>
+                                        j++;
+                                        if (j == 3)
+                                        {
+                                            break;
+                                        }
+                                    }
+        </div>
+            @foreach (Category itemCat in ViewBag.Category)
+            {
+                <div class="content_bottom" style="background: linear-gradient(90deg,#ff0000 5%,#ffffff 15%);">
+                    <div class="heading">
+                        <h3>@itemCat.CategoryName</h3>
+                    </div>
+                    @foreach (Hierarchary kim in ViewBag.Hier)
+                {
+                    if (kim.CategoryID == itemCat.CategoryID)
+                    {
+
+                            <a href="/Home/Category/@kim.id" style="display:inline-block;padding:0px 10px 0px 10px">
+                                @switch (kim.id)
+                                {
+                                    case 1: <img src="~/public/images/sentailogo.png" height="30px" alt="sentai" />
+                                        break;
+                                    case 2: <img src="~/public/images/exaidlogo.png" height="30px" alt="rider" />
+                                        break;
+                                    case 3: <img alt="ultraman" />
+                                        break;
+                                    case 4: <img src="~/public/images/dc_universe_online_dock_icon_by_mrforknspoon-d4hsp0g.png" height="30px" width="30px" alt="DC" />
+                                        break;
+                                    case 5: <img src="~/public/images/marvel300.jpg" height="30px"  alt="Marvel" />
+                                        break;
+                                    case 6: <img alt="ultraman" />
+                                        break;
+                                    case 7: <img alt="ultraman" />
+                                        break;
+                                    case 8: <img alt="ultraman" />
+                                        break;
+                                    case 9: <img alt="ultraman" />
+                                        break;
+                                }
+                            </a>
+
+
+                        }
+                    }
+
+
+                    <div class="clear"></div>
+                </div>
+
+                <div class="section group" >
+                    @{int i = 0;
+                    }
+                    @foreach (Hierarchary xem in ViewBag.Hier)
+                {
+                    foreach (Product item in Model.Where(x => x.CategoryID == xem.id && xem.CategoryID == itemCat.CategoryID))
+                    {
+                            <a href="@Url.Action("Details", "Home", new { id = item.ProductID })">
+                                <div id="content" class="grid_1_of_4 images_1_of_4">
+                                    <div id="img">
+
+                                        @{
+                                            string parameterValue = item.Image.ToString().Substring(0, item.Image.IndexOf("|"));
+                                        }
+                                        <img src="@Url.Content("/public/MyImages/" + Html.DisplayFor(modelitem => parameterValue))" />
+
+                                        <h2>@Html.DisplayFor(modelitem => item.ProductName)</h2>
+                                        <h3>@Html.DisplayFor(modelitem => item.Info).ToString().Substring(0,45)...</h3>
+                                    </div>
+                                    <div id="price" class="price-details">
+
+                                        <div class="price-number">
+                                            <p>
+                                                @if (item.Discount <= 0)
+                                                {
+                                                    <span class="rupees">$@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="rupees"><del>$@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</del></span>
+                                                    int price = int.Parse(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ") * item.Discount / 100;
+                                                    <span class="rupees" style="color:red"> $@price</span>
+                                                }
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <figure class="moreinfo">
+                                        <h2>@Html.DisplayFor(modelitem => item.ProductName)</h2>
+                                        <h3>@Html.DisplayFor(modelitem => item.Account.UserName)</h3>
+
+                                        <p>@Html.DisplayFor(modelitem => item.Info)</p>
+                                        <h2 style="color:red">
+                                            @if (item.Discount <= 0)
+                        {
+                                                <span class="rupees">$@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="rupees"><del>$@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</del></span>
+                                                int price = int.Parse(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ") * item.Discount / 100;
+                                                <span class="rupees" style="color:red"> $@price</span>
+                                            }
+                                        </h2>
+
+                                    </figure>
+                                </div>
+                            </a>
+                                                    i++;
+                                                    if (i == 3)
+                                                    {
+                                                        break;
+                                                    }
+                                                }
+                                                if (i == 3)
+                                                {
+                                                    break;
+                                                }
+                                            }
+                </div>
+               
+                                            }
+    </div>
+    <div id="sponserIMG" style="width:25%;float:right;padding-top:2.25%">
+        <img src="~/public/images/chou_super_hero_taisen.jpg"  width="99%" height="99%"/>
+        <img src="~/public/images/download11.jpg" width="99%" height="99%"/>
+        <img src="~/public/images/088b761ab2afac5eb77b144ace372cdb.jpg" width="99%" height="99%"/>
+    </div>
+</div>
+
+<script src="~/Scripts/slick/slick.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+    var stS = 0;
+    $(function () {
+        if ($(window).width() > 1000)
+            stS = 4;
+        else
+            stS = 3;
+    });
+    $(document).on('ready', function() {
+        $(".myslider").slick({
+        infinite: true,
+        slidesToShow: stS,
+        slidesToScroll: 4,
+            autoplay:true
+      });      
+    });
+</script>

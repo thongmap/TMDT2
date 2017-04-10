@@ -409,6 +409,7 @@
     <Content Include="Views\CartItem\OnlinePay.cshtml" />
     <Content Include="Views\Home\AboutUS.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.Mobile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
