@@ -230,7 +230,7 @@ namespace TMDT.Controllers
 
                 new BillDAO().Insert(bill);
 
-                return RedirectToAction("Order");
+                return RedirectToAction("Order","CartItem",new { email= bill.ShipEmail });
             }
             return View(bill);
         }
@@ -281,11 +281,9 @@ namespace TMDT.Controllers
         [HttpGet]
         public ActionResult Order(int? index, int?  limitTime, int? status,string email)
         {
-            if (String.IsNullOrEmpty(email))
-            {
                 var user = Session["User"] as TMDT.Account;
-                if (user == null)
-                    return RedirectToAction("Login", "Home");
+                if (user != null)
+            { 
                 var model = new BillDAO().ViewOrder(index, limitTime, status, user.AccountID);
                 return View(model);
             }
@@ -299,9 +297,9 @@ namespace TMDT.Controllers
         [HttpGet]
         public ActionResult OrderDetail(int id)
         {
-            var user = Session["User"] as TMDT.Account;
-            if (user == null)
-                return RedirectToAction("Login", "Home");
+            //var user = Session["User"] as TMDT.Account;
+            //if (user == null)
+            //    return RedirectToAction("Login", "Home");
             var model = new BillDAO().GetDetailBill_BillID(id);           
             return View(model);
         }

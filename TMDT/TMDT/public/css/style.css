@@ -351,6 +351,7 @@ a:hover#menu-icon {
 	width: 25%;
 	padding: 1% 0 1% 0.5%;
 	text-align: center;
+    
 	position: relative;
 }
 .images_1_of_4  img {
@@ -1473,6 +1474,7 @@ a:hover#menu-icon {
     }
 	.account_desc li a{
 		padding:0 3px;
+        font-size:10px;
 	}
 	.header_bottom_left{
 		float:none;
@@ -1484,18 +1486,15 @@ a:hover#menu-icon {
 		padding:0;
 		margin:5px 0;
 	}
-	.price-details p span.rupees{
-		font-size:0.7em;
-	}
 	.add-cart h4 a{
 		padding:10px 5px;
 		font-size:0.75em;
 	}
 	.images_1_of_4 h2{
-		font-size:0.5em;
+		font-size:0.6em;
 	}
     .images_1_of_4 h3{
-		font-size:0.4em;
+		font-size:0.5em;
 	}
 	.see{
 		padding-top:0;
@@ -1546,13 +1545,16 @@ a:hover#menu-icon {
         top:0px;
         display:inherit;
 	}
+  #content:hover .moreinfo{
+    display:none;
+}
     .content_bottom,.content_top
     {
         padding:5px 10px;
     }
     .content_bottom a img,.content_top a img
     {
-        height:10px;
+        height:23px;
     }
     .footer h4
     {
@@ -1560,12 +1562,13 @@ a:hover#menu-icon {
     }
     .footer .span_1_of_4
     {
-        font-size:10px;
+        width:47%;
+        font-size:20px;
     }
      .footer .social-icons img
     {
-        height:10px;
-        width:10px;
+        height:20px;
+        width:20px;
     }
      .dl-horizontal dd
      {
@@ -1605,7 +1608,7 @@ a:hover#menu-icon {
 		margin-bottom:10px;
 	}
 	.account_desc li a{
-		padding:0 10px;
+		padding:0 3px;
 	}
 	.logo,.cart{
 		float:none;
@@ -1619,7 +1622,7 @@ a:hover#menu-icon {
         padding-right: 0;
     }
     .heading h3{
-        font-size:0.6em;
+        font-size:0.8em;
     }
 	.search_box{
 		float:right;

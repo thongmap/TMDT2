@@ -70,6 +70,13 @@
                         <a href="@Url.Action("ChangeInfo", "Home",new { id=@Model.AccountID})" title="Danh sách tour" class="btn btn-success">Cập nhật</a>
                     </dd>
                 }
+                else
+                {
+                    <dt></dt>
+                    <dd>
+                        <a href="@Url.Action("Upgrade", "Home")" title="Danh sách tour" class="btn btn-success">Nâng cấp</a>
+                    </dd>
+                }
             </dl>
         </div>
     </div>

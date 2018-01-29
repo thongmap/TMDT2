@@ -155,6 +155,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="public\MyImages\" />
+    <Folder Include="Views\Default\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
@@ -258,6 +259,7 @@
     <Content Include="public\images\nenlogo.png" />
     <Content Include="public\images\plus-4-xxl.png" />
     <Content Include="public\images\price-rating.png" />
+    <Content Include="public\images\PWlogo.png" />
     <Content Include="public\images\quality-rating.png" />
     <Content Include="public\images\redrating.png" />
     <Content Include="public\images\redstar.png" />
@@ -326,6 +328,7 @@
     <Content Include="public\css\bootstrap.css.map" />
     <Content Include="public\css\bootstrap.min.css.map" />
     <Content Include="ClassDiagram1.cd" />
+    <None Include="Properties\PublishProfiles\Test.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="public\js\jquery-1.10.2.js" />
     <Content Include="public\js\jquery-1.10.2.min.js" />
@@ -360,7 +363,9 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
@@ -410,6 +415,7 @@
     <Content Include="Views\Home\AboutUS.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.Mobile.cshtml" />
+    <Content Include="Views\CartItem\Index.Mobile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

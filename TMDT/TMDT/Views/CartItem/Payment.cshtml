@@ -5,7 +5,17 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script type="text/javascript">
-
+    function Explain1()
+    {
+        document.getElementById("HEE").innerHTML = "Bạn sẽ nhận hàng trước khi thanh toán";
+    }
+    function Explain2() {
+        document.getElementById("HEE").innerHTML = "Bạn sẽ nhận hàng sau khi thanh toán";
+    }
+    function out()
+    {
+        document.getElementById("HEE").innerHTML = "";
+    }
     function GoToPayOnl()
     {
         var mobilreg = /0[0-9]{9,10}/;
@@ -103,11 +113,11 @@
 
                             <div class="form-group">
                                 <div class="col-md-5">
-                                    <input type="submit" value="Thanh toán khi nhận hàng" class="btn btn-default"   />
+                                    <input type="submit" value="Thanh toán khi nhận hàng" class="btn btn-default" onmouseover="Explain1();" onmouseout="out();" />
                                 </div>
                                 <div class="col-md-5">
                                     
-                                    <input type="button" value="Thanh toán trực tuyến" class="btn btn-default" onclick="GoToPayOnl();" />
+                                    <input type="button" value="Thanh toán trực tuyến" class="btn btn-default" onclick="GoToPayOnl();" onmouseout="out();" onmouseover="Explain2();" />
 </div>
 
 
@@ -156,6 +166,7 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <div id="HEE"></div>
                     </div>
                 </div>
 

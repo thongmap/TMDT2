@@ -108,6 +108,10 @@
                                      else
                                      { <a href="@Url.Action("OrderDetail", "CartItem", new { id = item.BillID })" title="Xem chi tiết hàng mua" class="btn-images btn btn btn-default">Xem hàng mua</a>}
                                  }
+                                 else
+                                 {
+                                    <a href="@Url.Action("OrderDetail", "CartItem", new { id = item.BillID })" title="Xem chi tiết hàng mua" class="btn-images btn btn btn-default">Xem hàng mua</a>
+                                 }
                             </td>
 @if (user != null)
 {

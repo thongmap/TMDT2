@@ -67,7 +67,7 @@ namespace TMDT.Controllers
                 {
                     new AccountDAO().DownGradeAcc(user.AccountID);
                     TempData["Expire"] = "Bạn đã hết hạn đăng sản phẩm !!!";
-                    RedirectToAction("Upgrade", "Home");
+                    return RedirectToAction("Upgrade", "Home");
                 }
                 if (user.Level == 2 || a.CountDayLeft(user.AccountID).Days == 0)
                 {
@@ -196,17 +196,6 @@ namespace TMDT.Controllers
             if (user == null)
             {
                 return RedirectToAction("Login", "Home");
-            }
-            DaysLeft i = new AccountDAO().CountDayLeft(int.Parse(user.AccountID.ToString()));
-            if (i.Days < 1)
-            {
-                new AccountDAO().DownGradeAcc(user.AccountID);
-                TempData["Expire"] = "Bạn đã hết hạn đăng sản phẩm !!!";
-               return RedirectToAction("Upgrade", "Home");
-            }
-            if (user.Level == 2 || a.CountDayLeft(user.AccountID).Days == 0)
-            {
-                return RedirectToAction("Upgrade", "Home");
             }
             Product product = new ProductDAO().CTSP(id);
             return View(product);

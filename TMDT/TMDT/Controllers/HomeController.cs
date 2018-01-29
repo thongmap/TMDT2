@@ -56,20 +56,20 @@ namespace TMDT.Controllers
             return View(db.Products.Find(id));
         }
 
-        public ActionResult ReturnSearch(string name, string category, string merchant, string pricetext1, string pricetext2, int? page, string currentFilter, string currentcategory, string currentmerchant, string curpricetext1, string curpricetext2)
+        public ActionResult ReturnSearch(string text, string category, string merchant, string pricetext1, string pricetext2, int? page, string currentFilter, string currentcategory, string currentmerchant, string curpricetext1, string curpricetext2)
         {
             TMDTModel db = new TMDTModel();
             db.Products.Load();
             var product = db.Products.Include(s => s.Category);
-            if (name != null)
+            if (text != null)
             {
                 page = 1;
             }
             else
             {
-                name = currentFilter;
+                text = currentFilter;
             }
-            ViewBag.CurrentFilter = name;
+            ViewBag.CurrentFilter = text;
             if (category != null)
             {
                 page = 1;
@@ -106,8 +106,8 @@ namespace TMDT.Controllers
                 pricetext2 = curpricetext2;
             }
             ViewBag.CurrentP2 = pricetext2;
-            if (!string.IsNullOrEmpty(name))
-                product = product.Where(i => i.ProductName.Contains(name));
+            if (!string.IsNullOrEmpty(text))
+                product = product.Where(i => i.ProductName.Contains(text));
             if (!string.IsNullOrEmpty(merchant))
                 product = product.Where(i => i.Account.UserName.Contains(merchant));
             if (!String.IsNullOrEmpty(category))
@@ -148,19 +148,24 @@ namespace TMDT.Controllers
                     if (user.Status == "true")
                     {
                         Session["User"] = user;
-                        string notice = "";
-                        DaysLeft daysleft = dao.CountDayLeft(user.AccountID);
-                        Session["DaysLeft"] = daysleft;
-                        var cart = ShoppingCart.GetCart(this.HttpContext, null);
-                        notice = cart.RemoveSellerItem(user.AccountID);
-                        cart.MigrateCart(username);
-                        Session.Remove("CartID");
-                        if (!String.IsNullOrEmpty(notice))
-                            TempData["notice"] = "Bạn không thể mua các sản phẩm: " + notice + " vì bạn bán chúng";
-                        Session["CartCount"] = ShoppingCart.GetCart(this.HttpContext, username).GetCount();
-                        if (cart.GetCount() > 0)
-                            return RedirectToAction("Index", "CartItem");
-                        return RedirectToAction("Index");
+                        if (user.Level == 2)
+                        {
+                            string notice = "";
+                            DaysLeft daysleft = dao.CountDayLeft(user.AccountID);
+                            Session["DaysLeft"] = daysleft;
+                            var cart = ShoppingCart.GetCart(this.HttpContext, null);
+                            notice = cart.RemoveSellerItem(user.AccountID);
+                            cart.MigrateCart(username);
+                            Session.Remove("CartID");
+                            if (!String.IsNullOrEmpty(notice))
+                                TempData["notice"] = "Bạn không thể mua các sản phẩm: " + notice + " vì bạn bán chúng";
+                            Session["CartCount"] = ShoppingCart.GetCart(this.HttpContext, username).GetCount();
+                            if (cart.GetCount() > 0)
+                                return RedirectToAction("Index", "CartItem");
+                            return RedirectToAction("Index");
+                        }
+                        else
+                            return RedirectToAction("Index", "Merchant");
                     }
                     else
                         ViewBag.Message = "Xin lỗi tài khoản của bạn đã bị khóa. Vì lý do: " + user.LockNote + ". Nếu có thắc mắc, vui lòng liên hệ 11-22-33-44.";

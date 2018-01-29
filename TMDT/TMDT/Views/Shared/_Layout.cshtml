@@ -34,8 +34,8 @@
             var email = prompt("Mời bạn nhập địa chỉ e-mail của bạn");
             if (email == null || email.length < 1)
                 alert("Bạn chưa nhập email");
-            if (!mailreg.test(email))
-                alert("Xin nhập chính xác địa chỉ email");
+            //if (!mailreg.test(email))
+            //    alert("Xin nhập chính xác địa chỉ email");
             else
                 location.href = '/CartItem/Order?email='+ email;
         }
@@ -44,7 +44,7 @@
 <body>
     <div class="wrap">
         <div class="header">
-            <div class="headertop_desc">
+            <div class="headertop_desc" >
                 <div class="call">
                     <p><span>Trợ giúp?</span> Gọi chúng tôi: <span class="number">1-22-3456789</span></p>
                 </div>
@@ -140,7 +140,7 @@
                 <div class="search_box">
                     @using (Html.BeginForm("ReturnSearch", "Home", FormMethod.Get))
                     {
-                        <p> @Html.TextBox("name", ViewBag.CurrentFilter as string, new { placeholder = "Gõ từ khóa" }) <input type="submit" value="" /></p>
+                        <p> @Html.TextBox("text", ViewBag.CurrentFilter as string, new { placeholder = "Gõ từ khóa" }) <input type="submit" value="" /></p>
                     }
                 </div>
                 <div class="clear"></div>
@@ -203,4 +203,13 @@
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 <script lang="javascript">(function() {var pname = ( (document.title !='')? document.title : document.querySelector('h1').innerHTML );var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async=1; ga.src = '//live.vnpgroup.net/js/web_client_box.php?hash=bea4a992b1b85ef623b85f3122b38ea3&data=eyJoYXNoIjoiODA2NzU5MmQzYjEyYWE2M2ZiOTgwYzFiNDdhNTJlOTMiLCJzc29faWQiOjMzNTQzNzl9&pname='+pname;var s = document.getElementsByTagName('script');s[0].parentNode.insertBefore(ga, s[0]);})();</script>	
+<div id="fb-root"></div>
+<script>
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.11&appId=764535100362540&autoLogAppEvents=1';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 </html>
