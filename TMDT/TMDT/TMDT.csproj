@@ -155,7 +155,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="public\MyImages\" />
-    <Folder Include="Views\Default\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />

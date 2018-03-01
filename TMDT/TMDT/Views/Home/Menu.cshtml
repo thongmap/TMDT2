@@ -23,16 +23,16 @@
     <a href="#nav" id="menu-icon"></a>
     <a href="#"></a>
     <ul>
-        <li @if (home == 1) { @active }><a href="@Url.Action("Index","Home")">Trang chủ</a></li>
+        <li @if (home == 1) { @active }><a href="~/Home/Index">Trang chủ</a></li>
                 @foreach (Category item in ViewBag.Category)
                 {
-                    <li  class="dropdown @if (cate == item.CategoryID) { <text>active</text> }"  >
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <li  class="downmenu @if (cate == item.CategoryID) { @active }"  >
+                        <a href="#" class="drop">
                             @Html.DisplayFor(modelitem =>item.CategoryName)
 
                             <b class="caret"></b>
                         </a>
-                        <ul class="dropdown-menu" style="background-color:black;width:100%">
+                        <ul class="dropmenu">
                             @foreach (Hierarchary intem in Model.Where(x => x.CategoryID == item.CategoryID))
                             {
                             <li class="divider"></li>
@@ -44,8 +44,8 @@
                         </ul>
                     </li>
                 }
-        <li @if (home == 3) { @active  }><a href="@Url.Action("AboutUS","Home")">Giới thiệu</a></li>
-        <li @if (home == 2) { @active  }><a href="@Url.Action("Contact","Home")">Liên hệ</a></li>
+        <li @if (home == 3) { @active  }><a href="~/Home/AboutUs">Giới thiệu</a></li>
+        <li @if (home == 2) { @active  }><a href="~/Home/Contact">Liên hệ</a></li>
     </ul>
     <div class="clear"></div>
 </nav>

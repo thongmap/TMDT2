@@ -52,6 +52,9 @@ namespace TMDT.Controllers
             TMDTModel db = new TMDTModel();
             int? idCat = db.Products.Find(id).CategoryID;
             List<Product> Lis = db.Products.Where(s => s.CategoryID == idCat).ToList();
+            Hierarchary hier = db.Hierarcharys.Find(idCat);
+            ViewBag.Hier = hier.Name;
+            ViewBag.CatName = db.Categories.Find(hier.CategoryID).CategoryName;
             ViewBag.Same = Lis;
             return View(db.Products.Find(id));
         }
